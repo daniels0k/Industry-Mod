@@ -1,0 +1,58 @@
+package com.daniels0k.industry_mod.block;
+
+import com.daniels0k.industry_mod.IndustryMod;
+import com.daniels0k.industry_mod.block.cable_winder.CableWinder;
+import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnect;
+import com.daniels0k.industry_mod.item.ModItems;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Function;
+
+public class ModBlocks {
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(IndustryMod.MOD_ID);
+
+    public static final DeferredBlock<Block> CASE_MACHINE_BASIC = registerBlock("case_machine_basic",
+            registryName -> new Block(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(5.0f, 6.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.IRON)), true);
+
+    public static final DeferredBlock<Block> WIRE_COPPER_CONNECT = registerBlock("wire_copper_connect",
+            registryName -> new WireCopperConnect(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .sound(SoundType.COPPER)
+                    .strength(4.0f, 3.5f)
+                    .requiresCorrectToolForDrops()), true);
+
+    public static final DeferredBlock<Block> CABLE_WINDER = registerBlock("cable_winder",
+            registryName -> new CableWinder(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(4.0f, 3.0f)
+                    .sound(SoundType.IRON)
+                    .noOcclusion()), true);
+
+    private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<ResourceLocation, T> block, boolean isItemBlcok) {
+        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
+        if(isItemBlcok) {
+            registerBlockItem(name, toReturn);
+        }
+        return toReturn;
+    }
+
+    private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
+        ModItems.ITEMS.registerSimpleBlockItem(name, block);
+    }
+
+    public static void register(IEventBus eventBus) {
+        BLOCKS.register(eventBus);
+    }
+}

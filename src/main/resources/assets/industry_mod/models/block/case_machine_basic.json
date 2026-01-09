@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "industry_mod:block/case_machine_basic",
+    "particle": "industry_mod:block/case_machine_basic"
+  },
+  "render_type": "solid"
+}

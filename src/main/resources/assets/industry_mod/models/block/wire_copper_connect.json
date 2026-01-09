@@ -1,0 +1,4 @@
+{
+  "parent": "industry_mod:custom/wire_connect/copper/wire_copper_connect",
+  "render_type": "solid"
+}

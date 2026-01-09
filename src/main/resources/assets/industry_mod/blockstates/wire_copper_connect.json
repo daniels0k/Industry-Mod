@@ -1,0 +1,84 @@
+{
+  "variants": {
+    "facing=down,mode=none": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect"
+    },
+    "facing=up,mode=none": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect",
+      "x": 180
+    },
+    "facing=south,mode=none": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect",
+      "x": 90
+    },
+    "facing=north,mode=none": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,mode=none": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=none": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect",
+      "x": 90,
+      "y": 90
+    },
+
+    "facing=down,mode=input": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_input"
+    },
+    "facing=up,mode=input": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_input",
+      "x": 180
+    },
+    "facing=south,mode=input": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_input",
+      "x": 90
+    },
+    "facing=north,mode=input": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_input",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,mode=input": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_input",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=input": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_input",
+      "x": 90,
+      "y": 90
+    },
+
+    "facing=down,mode=output": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_output"
+    },
+    "facing=up,mode=output": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_output",
+      "x": 180
+    },
+    "facing=south,mode=output": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_output",
+      "x": 90
+    },
+    "facing=north,mode=output": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_output",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,mode=output": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_output",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,mode=output": {
+      "model": "industry_mod:custom/wire_connect/copper/wire_copper_connect_output",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

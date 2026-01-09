@@ -1,0 +1,20 @@
+{
+  "creativetab.industry_mod.industry_mod_tab": "Industry Mod",
+
+  "item.industry_mod.wire_copper": "Wire Copper",
+  "item.industry_mod.wire_copper.desc0": "§7Component used in cable reels to connect two points.\n§e[§fClick-Right+Shift§e]§7 for more information.",
+  "item.industry_mod.wire_copper.desc1": "\n§6Distance: §76\n§6Efficiency: §a1.0\n§6LossFactor: §a0.05",
+
+  "item.industry_mod.connection_changer": "Connection Changer",
+  "item.industry_mod.connection_changer.desc0": "§7An easy-to-use tool for changing the mode of a cable connector.\n§e[§fShift§e]§7 to change mode.",
+  "item.industry_mod.connection_changer.desc1": "\n§7Mode: %mode%",
+
+  "item.industry_mod.cable_roll": "Cable Roll",
+  "item.industry_mod.cable_roll.desc0": "§7Component used to wind the cable of a specific material to connect two points.\n§e[§fShift§e]§7 for more information.",
+  "item.industry_mod.cable_roll.desc1": "\n§7The amount of thread is determined by the durability of the item.\n\n§6Distance: §7%wire_used% for block\n§6Efficiency: §a%efficiency%\n§6LossFactor: §a%loss_factor%\n§6Cable Material: §7%type%",
+  "item.industry_mod.cable_roll_copper": "Cable Roll",
+
+  "block.industry_mod.case_machine_basic": "Basic Machine Casing",
+  "block.industry_mod.wire_copper_connect": "Wire Copper Connect",
+  "block.industry_mod.cable_winder": "Cable Winder"
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:copper_ingot",
+    "R": "minecraft:redstone"
+  },
+  "pattern": [
+    " I ",
+    " R ",
+    " I "
+  ],
+  "result": {
+    "count": 4,
+    "id": "industry_mod:wire_copper"
+  }
+}

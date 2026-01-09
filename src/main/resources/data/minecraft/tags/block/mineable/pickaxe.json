@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "industry_mod:case_machine_basic",
+    "industry_mod:wire_copper_connect",
+    "industry_mod:cable_winder"
+  ]
+}
