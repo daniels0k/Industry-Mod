@@ -2,6 +2,7 @@ package com.daniels0k.industry_mod;
 
 import com.daniels0k.industry_mod.block.ModBlockEntities;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinderEntityRenderer;
+import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnectEntityRenderer;
 import com.daniels0k.industry_mod.screen.ModMenuTypes;
 import com.daniels0k.industry_mod.screen.cable_winder.CableWinderScreen;
 import net.neoforged.api.distmarker.Dist;
@@ -35,6 +36,7 @@ public class IndustryModClient {
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.CABLE_WINDER.get(), CableWinderEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.WIRE_COPPER_CONNECT.get(), WireCopperConnectEntityRenderer::new);
     }
 
     @SubscribeEvent

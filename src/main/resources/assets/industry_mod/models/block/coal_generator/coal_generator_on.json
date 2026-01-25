@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "north": "industry_mod:block/coal_generator/coal_generator_on",
+    "south": "industry_mod:block/machine_output_side",
+    "west": "industry_mod:block/machine_sides",
+    "east": "industry_mod:block/machine_sides",
+    "up": "industry_mod:block/machine_sides",
+    "down": "industry_mod:block/machine_sides",
+    "particle": "industry_mod:block/machine_sides"
+  },
+  "render_type": "solid"
+}

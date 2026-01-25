@@ -40,6 +40,7 @@ public class CableWinderMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 62, 36));
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 80, 36));
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 98, 36));
+        this.addDataSlots(this.blockEntity.data);
     }
 
     @Override

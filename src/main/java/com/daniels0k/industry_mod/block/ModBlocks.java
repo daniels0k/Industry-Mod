@@ -2,6 +2,7 @@ package com.daniels0k.industry_mod.block;
 
 import com.daniels0k.industry_mod.IndustryMod;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinder;
+import com.daniels0k.industry_mod.block.coal_generator.CoalGenerator;
 import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnect;
 import com.daniels0k.industry_mod.item.ModItems;
 import net.minecraft.core.registries.Registries;
@@ -39,6 +40,13 @@ public class ModBlocks {
                     .strength(4.0f, 3.0f)
                     .sound(SoundType.IRON)
                     .noOcclusion()), true);
+
+    public static final DeferredBlock<Block> COAL_GENERATOR = registerBlock("coal_generator",
+            registryName -> new CoalGenerator(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(3.0f, 3.5f)
+                    .sound(SoundType.IRON)
+                    .requiresCorrectToolForDrops()), true);
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<ResourceLocation, T> block, boolean isItemBlcok) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

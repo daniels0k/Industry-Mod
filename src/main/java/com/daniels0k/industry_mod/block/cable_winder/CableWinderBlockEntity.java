@@ -17,7 +17,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -34,7 +36,7 @@ public class CableWinderBlockEntity extends BlockEntity implements MenuProvider 
                 return 1;
             }
 
-            return 0;
+            return stack.getMaxStackSize();
         }
 
         @Override
@@ -65,6 +67,29 @@ public class CableWinderBlockEntity extends BlockEntity implements MenuProvider 
         }
     };
     private float rotation;
+    private int progress;
+    private int maxProgress;
+    public final ContainerData data = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return index == 0 ? CableWinderBlockEntity.this.progress : CableWinderBlockEntity.this.maxProgress;
+        }
+
+        @Override
+        public void set(int index, int value) {
+            if(index == 0) {
+                CableWinderBlockEntity.this.progress = value;
+            } else if(index == 1) {
+                CableWinderBlockEntity.this.maxProgress = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
+
     public CableWinderBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.CABLE_WINDER.get(), pos, blockState);
     }
@@ -115,5 +140,44 @@ public class CableWinderBlockEntity extends BlockEntity implements MenuProvider 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, CableWinderBlockEntity blockEntity) {
+        if(level.isClientSide()) return;
+        ItemStack roll = blockEntity.inventory.getStackInSlot(0);
+        ItemStack wire = blockEntity.inventory.getStackInSlot(1);
+
+        if(wire.isEmpty() && roll.isEmpty()) {
+            blockEntity.progress = 0;
+            blockEntity.maxProgress = 0;
+            return;
+        }
+
+        if(roll.is(ModItems.CABLE_ROLL)) {
+            if(wire.is(ModItems.COPPER_WIRE)) {
+                if(level.getGameTime() % 30 != 0) return;
+                ItemStack roll_copper = ModItems.CABLE_ROLL_COPPER.toStack();
+                roll_copper.set(DataComponents.DAMAGE, 1000);
+                blockEntity.inventory.setStackInSlot(0, roll_copper);
+                blockEntity.setChanged();
+                return;
+            }
+        }
+
+        if(roll.isEmpty() || !roll.isDamaged()) return;
+
+        int currentDamage = roll.getDamageValue();
+        blockEntity.progress = currentDamage;
+        blockEntity.maxProgress = roll.getMaxDamage();
+
+        if(!wire.isEmpty()) {
+            if(currentDamage > 0) {
+                if(level.getGameTime() % 20 == 0) {
+                    roll.set(DataComponents.DAMAGE, currentDamage - 1);
+                    wire.shrink(1);
+                    blockEntity.setChanged();
+                }
+            }
+        }
     }
 }

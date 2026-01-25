@@ -2,6 +2,7 @@ package com.daniels0k.industry_mod;
 
 import com.daniels0k.industry_mod.block.ModBlockEntities;
 import com.daniels0k.industry_mod.block.ModBlocks;
+import com.daniels0k.industry_mod.configurations.Config;
 import com.daniels0k.industry_mod.item.ModCreativeTabs;
 import com.daniels0k.industry_mod.item.ModItems;
 import com.daniels0k.industry_mod.item.datacomponent.ModDataComponents;

@@ -18,4 +18,22 @@ public enum EnumModeWireCopperConnect implements StringRepresentable {
     public String getSerializedName() {
         return mode;
     }
+
+    public static EnumModeWireCopperConnect translate(WireCopperConnectBlockEntity.TypeConnect typeConnect) {
+        return switch (typeConnect) {
+            case INPUT -> MODE_INPUT;
+            case OUTPUT -> MODE_OUTPUT;
+        };
+    }
+
+    public static EnumModeWireCopperConnect translateInverse(WireCopperConnectBlockEntity.TypeConnect typeConnect) {
+        return switch (typeConnect) {
+            case OUTPUT -> MODE_INPUT;
+            case INPUT -> MODE_OUTPUT;
+        };
+    }
+
+    public EnumModeWireCopperConnect reversePut() {
+        return this == MODE_INPUT ? MODE_OUTPUT : this == MODE_OUTPUT ? MODE_INPUT : null;
+    }
 }

@@ -8,13 +8,26 @@
   "item.industry_mod.connection_changer": "Connection Changer",
   "item.industry_mod.connection_changer.desc0": "§7An easy-to-use tool for changing the mode of a cable connector.\n§e[§fShift§e]§7 to change mode.",
   "item.industry_mod.connection_changer.desc1": "\n§7Mode: %mode%",
+  "item.industry_mod.connection_changer.err_connection_or_parent_not_empty": "§cThe connector has connections or is the parent of other. unlink them to replace it.",
 
   "item.industry_mod.cable_roll": "Cable Roll",
   "item.industry_mod.cable_roll.desc0": "§7Component used to wind the cable of a specific material to connect two points.\n§e[§fShift§e]§7 for more information.",
-  "item.industry_mod.cable_roll.desc1": "\n§7The amount of thread is determined by the durability of the item.\n\n§6Distance: §7%wire_used% for block\n§6Efficiency: §a%efficiency%\n§6LossFactor: §a%loss_factor%\n§6Cable Material: §7%type%",
+  "item.industry_mod.cable_roll.desc1": "\n§7The amount of thread is determined by the durability of the item.\n\n§6Distance: §7%s for block\n§6Efficiency: §a%s\n§6LossFactor: §a%s\n§6Cable Material: §7%s",
+  "item.industry_mod.cable_roll.err_wire": "§cInsufficient cable, §c%s cables of %s are required",
+  "item.industry_mod.cable_roll.err_loop": "§cConnection loop detected, connection aborted",
   "item.industry_mod.cable_roll_copper": "Cable Roll",
 
   "block.industry_mod.case_machine_basic": "Basic Machine Casing",
   "block.industry_mod.wire_copper_connect": "Wire Copper Connect",
-  "block.industry_mod.cable_winder": "Cable Winder"
+  "block.industry_mod.cable_winder": "Cable Winder",
+  "gui.industry_mod.cable_winder.time_process": "Time per roll: %sm: %ss",
+  "block.industry_mod.coal_generator": "Coal Generator",
+
+  "industry_mod.configuration.title": "Industry Mod Configuration",
+  "industry_mod.configuration.section.industry.mod.common.toml": "Industry Mod Configuration",
+  "industry_mod.configuration.section.industry.mod.common.toml.title": "Industry Mod Configuration",
+  "industry_mod.configuration.hit_block_particle_up": "Hit Block Particle Up",
+  "industry_mod.configuration.hit_block_particle_up.tooltip": "Define whether Y coordinates should be added if the block is compatible",
+  "industry_mod.configuration.cable_rendering_rotation": "Distance Render Cable",
+  "industry_mod.configuration.cable_rendering_rotation.tooltip": "The type of rotation used to render the cable."
 }

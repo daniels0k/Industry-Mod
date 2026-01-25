@@ -12,6 +12,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(IndustryMod.MOD_ID);
@@ -35,7 +36,7 @@ public class ModItems {
             registryName -> new CableRollCopper(new Item.Properties()
                     .setId(ResourceKey.create(Registries.ITEM, registryName))
                     .stacksTo(1)
-                    .component(ModDataComponents.ROUTE_DATA, new RouteDataComponent(new ArrayList<>(), "copper", 6, 1.0f, 0.05f))
+                    .component(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.empty(), Optional.empty(), "copper", 6, 1.0f, 0.05f))
                     .durability(1000)));
 
     public static void register(IEventBus eventBus) {

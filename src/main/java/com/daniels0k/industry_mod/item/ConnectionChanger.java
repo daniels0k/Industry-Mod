@@ -2,6 +2,7 @@ package com.daniels0k.industry_mod.item;
 
 import com.daniels0k.industry_mod.block.connector.copper.EnumModeWireCopperConnect;
 import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnect;
+import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnectBlockEntity;
 import com.daniels0k.industry_mod.item.datacomponent.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -27,7 +28,7 @@ public class ConnectionChanger extends Item {
         boolean isInputChange = stack.getOrDefault(ModDataComponents.CHANGER_MODE, false);
         tooltip.accept(Component.translatable("item.industry_mod.connection_changer.desc0"));
         String translateMode = Component.translatable("item.industry_mod.connection_changer.desc1").getString();
-        tooltip.accept(Component.literal(translateMode.replaceAll("%mode%", isInputChange ? "§9Input" : "§cOutput")));
+        tooltip.accept(Component.literal(translateMode.replaceAll("%mode%", isInputChange ? "§cInput" : "§9Output")));
         super.appendHoverText(stack, context, display, tooltip, flag);
     }
 
@@ -47,6 +48,11 @@ public class ConnectionChanger extends Item {
         }
 
         if(!(blockState.getBlock() instanceof WireCopperConnect)) return InteractionResult.FAIL;
+        if(!(level.getBlockEntity(blockPos) instanceof WireCopperConnectBlockEntity wireCopperConnectBE)) return InteractionResult.FAIL;
+        if(!wireCopperConnectBE.connections.isEmpty() || !wireCopperConnectBE.parentsConnect.isEmpty()) {
+            player.displayClientMessage(Component.translatable("item.industry_mod.connection_changer.err_connection_or_parent_not_empty"), true);
+            return InteractionResult.FAIL;
+        }
         EnumModeWireCopperConnect newMode = isInputChange ? EnumModeWireCopperConnect.MODE_INPUT : EnumModeWireCopperConnect.MODE_OUTPUT;
 
         BlockState setMode = blockState.setValue(WireCopperConnect.MODE_CONNECT, newMode);

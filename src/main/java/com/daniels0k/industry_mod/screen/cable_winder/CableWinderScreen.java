@@ -27,6 +27,11 @@ public class CableWinderScreen extends AbstractContainerScreen<CableWinderMenu> 
         super.render(graphics, mouseX, mouseY, partialTick);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        graphics.drawString(font, Component.literal("test"), x + 8, y + 50, CommonColors.BLACK, false);
+        int secondsRemaining = menu.blockEntity.data.get(0);
+        int mins = secondsRemaining / 60;
+        int secs = secondsRemaining % 60;
+        String timeRoll = Component.translatable("gui.industry_mod.cable_winder.time_process", mins, secs).getString();
+        graphics.drawString(font, timeRoll, x + 7, y + 62, CommonColors.DARK_GRAY, false);
+        this.renderTooltip(graphics, mouseX, mouseY);
     }
 }
