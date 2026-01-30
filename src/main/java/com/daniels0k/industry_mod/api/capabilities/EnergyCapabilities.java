@@ -17,6 +17,6 @@ public class EnergyCapabilities {
     }
 
     public static EnergyStorage enerTickToEnergyNeoForge(com.daniels0k.industry_mod.api.energy.EnerTickStorage enertick) {
-        return new EnergyStorage(enertick.getCapacity(), enertick.getMaxReceive(), enertick.getMaxExtract(), enertick.getEnergy());
+        return new EnergyStorage(enertick.getMaxEnergyStored(), enertick.getMaxReceive(), enertick.getMaxExtract(), enertick.getEnergyStored());
     }
 }

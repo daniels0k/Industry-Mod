@@ -1,9 +1,9 @@
 package com.daniels0k.industry_mod.item;
 
 import com.daniels0k.industry_mod.configurations.Config;
-import com.daniels0k.industry_mod.block.connector.copper.EnumModeWireCopperConnect;
-import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnect;
-import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnectBlockEntity;
+import com.daniels0k.industry_mod.block.connector.copper.EnumModeWireConnect;
+import com.daniels0k.industry_mod.block.connector.copper.WireConnect;
+import com.daniels0k.industry_mod.block.connector.copper.WireConnectBlockEntity;
 import com.daniels0k.industry_mod.item.datacomponent.ModDataComponents;
 import com.daniels0k.industry_mod.item.datacomponent.RouteDataComponent;
 import net.minecraft.client.Minecraft;
@@ -58,21 +58,26 @@ public class CableRollCopper extends Item {
         BlockPos blockPos = context.getClickedPos();
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         if(level.isClientSide()) return InteractionResult.SUCCESS;
-        if(!(blockEntity instanceof WireCopperConnectBlockEntity copperWire)) return InteractionResult.PASS;
+        if(!(blockEntity instanceof WireConnectBlockEntity copperWire)) return InteractionResult.PASS;
         BlockState blockState = copperWire.getBlockState();
-        EnumModeWireCopperConnect mode = blockState.getValue(WireCopperConnect.MODE_CONNECT);
-        if(mode == EnumModeWireCopperConnect.MODE_NONE) return InteractionResult.FAIL;
+        EnumModeWireConnect mode = blockState.getValue(WireConnect.MODE_CONNECT);
+        if(mode == EnumModeWireConnect.MODE_NONE) return InteractionResult.FAIL;
 
         RouteDataComponent route = stack.get(ModDataComponents.ROUTE_DATA);
         if(route == null) return InteractionResult.FAIL;
+        if(player == null) return InteractionResult.PASS;
 
         if(route.connectionA().isEmpty()) {
+            if(mode == EnumModeWireConnect.MODE_OUTPUT) {
+                player.displayClientMessage(Component.translatable("item.industry_mod.cable_roll.err_connectionA"), true);
+                return InteractionResult.FAIL;
+            }
+
             stack.set(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.of(blockPos), Optional.empty(),
                      route.cableType(), route.distanceMax(), route.efficiency(), route.lossFactor()));
             return InteractionResult.SUCCESS;
         }
 
-        if(player == null) return InteractionResult.PASS;
         if(player.isShiftKeyDown()) {
             stack.set(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.empty(), Optional.empty(),
                     route.cableType(), route.distanceMax(), route.efficiency(), route.lossFactor()));
@@ -83,7 +88,7 @@ public class CableRollCopper extends Item {
         if(!(posA.distManhattan(blockPos) >= 1)) return InteractionResult.PASS;
         BlockEntity blockEntityA = level.getBlockEntity(posA);
 
-        if(!(blockEntityA instanceof WireCopperConnectBlockEntity copperWireA)) return InteractionResult.PASS;
+        if(!(blockEntityA instanceof WireConnectBlockEntity copperWireA)) return InteractionResult.PASS;
         if(copperWireA.parentsConnect.contains(blockPos) || copperWire.parentsConnect.contains(posA)) {
             player.displayClientMessage(Component.translatable("item.industry_mod.cable_roll.err_loop"), true);
             return InteractionResult.FAIL;
@@ -154,9 +159,9 @@ public class CableRollCopper extends Item {
 
                 boolean valid = false;
                 boolean isInsufficientWire = false;
-                if(mcPlayer.level().getBlockEntity(lookPos) instanceof WireCopperConnectBlockEntity) {
-                    EnumModeWireCopperConnect mode = mcPlayer.level().getBlockState(lookPos).getValue(WireCopperConnect.MODE_CONNECT);
-                    if(mode == EnumModeWireCopperConnect.MODE_INPUT || mode == EnumModeWireCopperConnect.MODE_OUTPUT) {
+                if(mcPlayer.level().getBlockEntity(lookPos) instanceof WireConnectBlockEntity) {
+                    EnumModeWireConnect mode = mcPlayer.level().getBlockState(lookPos).getValue(WireConnect.MODE_CONNECT);
+                    if(mode == EnumModeWireConnect.MODE_INPUT || mode == EnumModeWireConnect.MODE_OUTPUT) {
                         valid = true;
                     }
                 }

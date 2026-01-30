@@ -27,6 +27,7 @@ public class ModCreativeTabs {
                                 output.accept(ModItems.CABLE_ROLL);
                                 output.accept(ModItems.CABLE_ROLL_COPPER);
 
+                                output.accept(ModBlocks.VAULT_ENERTICK);
                                 output.accept(ModBlocks.COAL_GENERATOR);
                                 output.accept(ModBlocks.WIRE_COPPER_CONNECT);
                                 output.accept(ModBlocks.CABLE_WINDER);

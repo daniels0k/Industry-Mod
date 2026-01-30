@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "north": "industry_mod:block/vaults/enertick/vault_simple_eight",
+    "south": "industry_mod:block/vaults/enertick/vault_simple_eight",
+    "west": "industry_mod:block/vaults/enertick/vault_simple_eight",
+    "east": "industry_mod:block/vaults/enertick/vault_simple_eight",
+    "up": "industry_mod:block/vaults/enertick/vault_simple_sides",
+    "down": "industry_mod:block/vaults/enertick/vault_simple_sides",
+    "particle": "industry_mod:block/vaults/enertick/vault_simple_sides"
+  },
+  "render_type": "solid"
+}

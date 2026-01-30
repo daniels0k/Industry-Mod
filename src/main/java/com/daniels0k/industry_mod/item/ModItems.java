@@ -36,7 +36,7 @@ public class ModItems {
             registryName -> new CableRollCopper(new Item.Properties()
                     .setId(ResourceKey.create(Registries.ITEM, registryName))
                     .stacksTo(1)
-                    .component(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.empty(), Optional.empty(), "copper", 6, 1.0f, 0.05f))
+                    .component(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.empty(), Optional.empty(), "copper", 6, 1.0f, 3.5f))
                     .durability(1000)));
 
     public static void register(IEventBus eventBus) {

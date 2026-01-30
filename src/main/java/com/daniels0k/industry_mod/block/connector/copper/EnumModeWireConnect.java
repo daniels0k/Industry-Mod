@@ -2,7 +2,7 @@ package com.daniels0k.industry_mod.block.connector.copper;
 
 import net.minecraft.util.StringRepresentable;
 
-public enum EnumModeWireCopperConnect implements StringRepresentable {
+public enum EnumModeWireConnect implements StringRepresentable {
     MODE_NONE("none"),
     MODE_INPUT("input"),
     MODE_OUTPUT("output");
@@ -10,7 +10,7 @@ public enum EnumModeWireCopperConnect implements StringRepresentable {
 
     private final String mode;
 
-    EnumModeWireCopperConnect(String mode) {
+    EnumModeWireConnect(String mode) {
         this.mode = mode;
     }
 
@@ -19,21 +19,21 @@ public enum EnumModeWireCopperConnect implements StringRepresentable {
         return mode;
     }
 
-    public static EnumModeWireCopperConnect translate(WireCopperConnectBlockEntity.TypeConnect typeConnect) {
+    public static EnumModeWireConnect translate(WireConnectBlockEntity.TypeConnect typeConnect) {
         return switch (typeConnect) {
             case INPUT -> MODE_INPUT;
             case OUTPUT -> MODE_OUTPUT;
         };
     }
 
-    public static EnumModeWireCopperConnect translateInverse(WireCopperConnectBlockEntity.TypeConnect typeConnect) {
+    public static EnumModeWireConnect translateInverse(WireConnectBlockEntity.TypeConnect typeConnect) {
         return switch (typeConnect) {
             case OUTPUT -> MODE_INPUT;
             case INPUT -> MODE_OUTPUT;
         };
     }
 
-    public EnumModeWireCopperConnect reversePut() {
+    public EnumModeWireConnect reversePut() {
         return this == MODE_INPUT ? MODE_OUTPUT : this == MODE_OUTPUT ? MODE_INPUT : null;
     }
 }

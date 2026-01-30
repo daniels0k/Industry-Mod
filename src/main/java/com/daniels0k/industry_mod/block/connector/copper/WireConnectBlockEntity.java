@@ -25,12 +25,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WireCopperConnectBlockEntity extends BlockEntity {
+public class WireConnectBlockEntity extends BlockEntity {
     public enum TypeConnect {
         INPUT,
         OUTPUT;
 
-        public static TypeConnect translate(EnumModeWireCopperConnect mode) {
+        public static TypeConnect translate(EnumModeWireConnect mode) {
             return switch (mode) {
                 case MODE_INPUT -> INPUT;
                 case MODE_OUTPUT -> OUTPUT;
@@ -63,7 +63,7 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
         }
     }
 
-    public WireCopperConnectBlockEntity(BlockPos pos, BlockState blockState) {
+    public WireConnectBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.WIRE_COPPER_CONNECT.get(), pos, blockState);
     }
 
@@ -71,11 +71,11 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
         if(this.level == null || pointB.equals(this.worldPosition)) return;
         BlockEntity blockEntity = this.level.getBlockEntity(pointB);
 
-        if(!(blockEntity instanceof WireCopperConnectBlockEntity wireCopperConnect)) return;
+        if(!(blockEntity instanceof WireConnectBlockEntity wireCopperConnect)) return;
         BlockState blockStateWireCopper = wireCopperConnect.getBlockState();
-        if(!(blockStateWireCopper.getBlock() instanceof WireCopperConnect)) return;
+        if(!(blockStateWireCopper.getBlock() instanceof WireConnect)) return;
 
-        EnumModeWireCopperConnect modeB = blockStateWireCopper.getValue(WireCopperConnect.MODE_CONNECT);
+        EnumModeWireConnect modeB = blockStateWireCopper.getValue(WireConnect.MODE_CONNECT);
         TypeConnect typeConnectB = TypeConnect.translate(modeB);
 
         boolean exist = connections.get(typeConnectB).stream().anyMatch(data -> data.pos.equals(pointB));
@@ -84,7 +84,7 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
             ConnectionData connectionData = new ConnectionData(pointB, efficiency, lossFactor);
             connectionData.setTotalWireUsed(countWireUsed);
             connections.put(typeConnectB, connectionData);
-            if(level != null && level.getBlockEntity(pointB) instanceof WireCopperConnectBlockEntity targetBE) {
+            if(level != null && level.getBlockEntity(pointB) instanceof WireConnectBlockEntity targetBE) {
                 if(!targetBE.parentsConnect.contains(this.worldPosition)) {
                     targetBE.parentsConnect.add(this.worldPosition);
                     targetBE.setChanged();
@@ -117,7 +117,7 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
             list.remove(list.size() - 1);
             this.parentsConnect.remove(otherPos);
 
-            if(level.getBlockEntity(otherPos) instanceof WireCopperConnectBlockEntity wireCopperConnect) {
+            if(level.getBlockEntity(otherPos) instanceof WireConnectBlockEntity wireCopperConnect) {
                 wireCopperConnect.removeConnection(this.worldPosition);
                 wireCopperConnect.parentsConnect.remove(this.worldPosition);
             }
@@ -180,7 +180,7 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
             parentsConnect.add(new BlockPos(child.getIntOr("x", 0), child.getIntOr("y", 0), child.getIntOr("z", 0)));
         }
 
-        if(getBlockState().getValue(WireCopperConnect.MODE_CONNECT) == EnumModeWireCopperConnect.MODE_INPUT) {
+        if(getBlockState().getValue(WireConnect.MODE_CONNECT) == EnumModeWireConnect.MODE_INPUT) {
             connections.clear();
             ValueInput connectionsData = input.childOrEmpty("connections");
             ValueInput.ValueInputList inputs = connectionsData.childrenListOrEmpty("inputs");
@@ -223,35 +223,76 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState) {
-        Direction facing = blockState.getValue(WireCopperConnect.FACING);
-        EnumModeWireCopperConnect mode = blockState.getValue(WireCopperConnect.MODE_CONNECT);
+        Direction facing = blockState.getValue(WireConnect.FACING);
+        EnumModeWireConnect mode = blockState.getValue(WireConnect.MODE_CONNECT);
 
         switch (mode) {
-            case MODE_NONE -> {
+            case MODE_INPUT -> {
+                BlockPos backBlock = blockPos.relative(facing);
+                EnerTickStorage enerTick = level.getCapability(EnergyCapabilities.EnerTickStorage.BLOCK, backBlock, facing.getOpposite());
+
+                if(enerTick != null && enerTick.isVault()) {
+                    int toExtract = energyET.getMaxExtract() - energyET.getEnergyStored();
+                    if(toExtract > 0) {
+                        int extracted = enerTick.extractEnergy(toExtract, false);
+                        energyET.receiveEnergy(extracted, false);
+                        this.setChanged();
+                    }
+                }
+
+                int validConnections = 0;
+                for(ConnectionData connection : connections.values()) {
+                    if(level.getCapability(EnergyCapabilities.EnerTickStorage.BLOCK, connection.pos, null) != null) {
+                        validConnections++;
+                    }
+                }
+
+                if(validConnections == 0) return;
+
+                int energyPerConnection = energyET.getEnergyStored() / validConnections;
+
+                if(energyPerConnection <= 0) return;
+
+                for(ConnectionData connection : connections.values()) {
+                    EnerTickStorage targetEnertick = level.getCapability(EnergyCapabilities.EnerTickStorage.BLOCK,
+                            connection.pos, null);
+
+                    if(targetEnertick != null) {
+                        int loss = (int) connection.lossFactor;
+                        if(energyPerConnection <= loss) continue;
+
+                        int availableAfterFixed = energyPerConnection - loss;
+                        int maxToTarget = (int) (availableAfterFixed * connection.efficiency);
+                        int accepted = targetEnertick.receiveEnergy(maxToTarget, true);
+
+                        if(accepted > 0) {
+                            int totalToExtract = (int) Math.ceil((accepted / (double) connection.efficiency) + loss);
+                            if(energyET.getEnergyStored() >= totalToExtract) {
+                                int extracted = energyET.extractEnergy(totalToExtract, false);
+                                int finalDelivery = (int) ((extracted - loss) * connection.efficiency);
+                                targetEnertick.receiveEnergy(Math.max(0, finalDelivery), false);
+                                this.setChanged();
+                                if(level.getBlockEntity(connection.pos) instanceof BlockEntity be) {
+                                    be.setChanged();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            case MODE_OUTPUT -> {
                 BlockPos targetPos = blockPos.relative(facing);
 
                 EnerTickStorage targetEnertick = level.getCapability(EnergyCapabilities.EnerTickStorage.BLOCK,
                         targetPos, facing.getOpposite());
 
-                if(targetEnertick != null) {
-                    targetEnertick.receiveEnergy(targetEnertick.getEnergyStored(), false);
-                    energyET.extractEnergy(targetEnertick.getEnergyStored(), false);
-                }
-            }
-            case MODE_INPUT -> {
-                for(ConnectionData input : connections.get(TypeConnect.INPUT)) {
-                    EnerTickStorage targetEnertick = level.getCapability(EnergyCapabilities.EnerTickStorage.BLOCK,
-                            input.pos, null);
+                if(targetEnertick != null && energyET.getEnergyStored() > 0) {
+                    int toSend = energyET.getEnergyStored();
+                    int accepted = targetEnertick.receiveEnergy(toSend, true);
 
-                    if(targetEnertick != null) {
-                    }
-                }
-
-                for(ConnectionData output : connections.get(TypeConnect.OUTPUT)) {
-                    EnerTickStorage targetEnertick = level.getCapability(EnergyCapabilities.EnerTickStorage.BLOCK,
-                            output.pos, null);
-
-                    if(targetEnertick != null) {
+                    if(accepted > 0) {
+                        int extracted = energyET.extractEnergy(accepted, false);
+                        targetEnertick.receiveEnergy(extracted, false);
                     }
                 }
             }
@@ -264,7 +305,7 @@ public class WireCopperConnectBlockEntity extends BlockEntity {
         for(ConnectionData data : connections.values()) {
             totalCablesToDrop += data.getTotalWireUsed();
 
-            if(level.getBlockEntity(data.pos) instanceof WireCopperConnectBlockEntity wireCopperConnect) {
+            if(level.getBlockEntity(data.pos) instanceof WireConnectBlockEntity wireCopperConnect) {
                 wireCopperConnect.removeConnection(this.worldPosition);
             }
         }

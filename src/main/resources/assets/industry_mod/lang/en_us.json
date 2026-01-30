@@ -3,7 +3,7 @@
 
   "item.industry_mod.wire_copper": "Wire Copper",
   "item.industry_mod.wire_copper.desc0": "§7Component used in cable reels to connect two points.\n§e[§fClick-Right+Shift§e]§7 for more information.",
-  "item.industry_mod.wire_copper.desc1": "\n§6Distance: §76\n§6Efficiency: §a1.0\n§6LossFactor: §a0.05",
+  "item.industry_mod.wire_copper.desc1": "\n§6Distance: §76\n§6Efficiency: §a1.0\n§6LossFactor: §a3.5",
 
   "item.industry_mod.connection_changer": "Connection Changer",
   "item.industry_mod.connection_changer.desc0": "§7An easy-to-use tool for changing the mode of a cable connector.\n§e[§fShift§e]§7 to change mode.",
@@ -15,13 +15,18 @@
   "item.industry_mod.cable_roll.desc1": "\n§7The amount of thread is determined by the durability of the item.\n\n§6Distance: §7%s for block\n§6Efficiency: §a%s\n§6LossFactor: §a%s\n§6Cable Material: §7%s",
   "item.industry_mod.cable_roll.err_wire": "§cInsufficient cable, §c%s cables of %s are required",
   "item.industry_mod.cable_roll.err_loop": "§cConnection loop detected, connection aborted",
+  "item.industry_mod.cable_roll.err_connectionA": "§cYou cannot start with an output.",
   "item.industry_mod.cable_roll_copper": "Cable Roll",
 
   "block.industry_mod.case_machine_basic": "Basic Machine Casing",
   "block.industry_mod.wire_copper_connect": "Wire Copper Connect",
   "block.industry_mod.cable_winder": "Cable Winder",
-  "gui.industry_mod.cable_winder.time_process": "Time per roll: %sm: %ss",
   "block.industry_mod.coal_generator": "Coal Generator",
+  "block.industry_mod.vault_enertick": "Enertick Vault",
+  "block.industry_mod.vault_enertick.desc0": "A simple vault that stores EnerTick.\n§eVault: §a10,000ET",
+
+  "gui.industry_mod.time_process": "Time per roll: %sm: %ss",
+  "gui.industry_mod.time_enertick_generated": "EnerTick: %sET/s",
 
   "industry_mod.configuration.title": "Industry Mod Configuration",
   "industry_mod.configuration.section.industry.mod.common.toml": "Industry Mod Configuration",

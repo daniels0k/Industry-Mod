@@ -30,20 +30,12 @@ public class EnerTickStorage implements ValueIOSerializable {
         this.energy = Math.max(0, Math.min(capacity, energy));
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
     public int getMaxExtract() {
         return maxExtract;
     }
 
     public int getMaxReceive() {
         return maxReceive;
-    }
-
-    public int getEnergy() {
-        return energy;
     }
 
     @Override
@@ -105,5 +97,9 @@ public class EnerTickStorage implements ValueIOSerializable {
 
     public boolean isFull() {
         return energy >= capacity;
+    }
+
+    public boolean isVault() {
+        return false;
     }
 }

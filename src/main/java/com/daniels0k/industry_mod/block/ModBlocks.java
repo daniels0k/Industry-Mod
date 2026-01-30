@@ -3,7 +3,8 @@ package com.daniels0k.industry_mod.block;
 import com.daniels0k.industry_mod.IndustryMod;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinder;
 import com.daniels0k.industry_mod.block.coal_generator.CoalGenerator;
-import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnect;
+import com.daniels0k.industry_mod.block.connector.copper.WireConnect;
+import com.daniels0k.industry_mod.block.vault_energy.enertick.VaultEnertick;
 import com.daniels0k.industry_mod.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -28,7 +29,7 @@ public class ModBlocks {
                     .sound(SoundType.IRON)), true);
 
     public static final DeferredBlock<Block> WIRE_COPPER_CONNECT = registerBlock("wire_copper_connect",
-            registryName -> new WireCopperConnect(BlockBehaviour.Properties.of()
+            registryName -> new WireConnect(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .sound(SoundType.COPPER)
                     .strength(4.0f, 3.5f)
@@ -46,6 +47,13 @@ public class ModBlocks {
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(3.0f, 3.5f)
                     .sound(SoundType.IRON)
+                    .requiresCorrectToolForDrops()), true);
+
+    public static final DeferredBlock<VaultEnertick> VAULT_ENERTICK = registerBlock("vault_enertick",
+            registryName -> new VaultEnertick(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(3.0f, 3.0f)
+                    .sound(SoundType.COPPER)
                     .requiresCorrectToolForDrops()), true);
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<ResourceLocation, T> block, boolean isItemBlcok) {

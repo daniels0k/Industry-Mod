@@ -9,32 +9,62 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
-public class WireCopperConnectEntityRenderer implements BlockEntityRenderer<WireCopperConnectBlockEntity> {
+public class WireConnectEntityRenderer implements BlockEntityRenderer<WireConnectBlockEntity> {
     private static final ResourceLocation COPPER_TEXTURE = ResourceLocation.withDefaultNamespace("textures/block/copper_block.png");
-    public WireCopperConnectEntityRenderer(BlockEntityRendererProvider.Context context) {
+    public WireConnectEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(WireCopperConnectBlockEntity wireCopperConnectBE, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
+    public void render(WireConnectBlockEntity wireCopperConnectBE, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
         if(wireCopperConnectBE.connections.isEmpty() || Config.RENDER_CONNECTION_CABLE.isFalse()) return;
 
         VertexConsumer builder = bufferSource.getBuffer(RenderType.entityCutout(COPPER_TEXTURE));
         BlockPos posA = wireCopperConnectBE.getBlockPos();
+        Direction facingA = wireCopperConnectBE.getBlockState().getValue(WireConnect.FACING);
 
-        for(WireCopperConnectBlockEntity.ConnectionData data : wireCopperConnectBE.connections.values()) {
+        double offSet = 0.81;
+        double ax = 0.5, ay = 0.5, az = 0.5;
+
+        switch (facingA) {
+            case DOWN -> ay = offSet;
+            case UP -> ay = 1.0 - offSet;
+            case SOUTH -> az = 1.0 - offSet;
+            case NORTH -> az = offSet;
+            case EAST -> ax = 1.0 - offSet;
+            case WEST -> ax = offSet;
+        }
+
+        for(WireConnectBlockEntity.ConnectionData data : wireCopperConnectBE.connections.values()) {
             BlockPos posB = data.pos();
+            if(posA.hashCode() > posB.hashCode()) continue;
 
-            double dx = posB.getX() - posA.getX();
-            double dy = posB.getY() - posA.getY();
-            double dz = posB.getZ() - posA.getZ();
+            double bx = 0.5, by = 0.5, bz = 0.5;
+            BlockState blockStateB = wireCopperConnectBE.getLevel().getBlockState(posB);
+            if(blockStateB.hasProperty(WireConnect.FACING)) {
+                Direction facingB = blockStateB.getValue(WireConnect.FACING);
+                switch (facingB) {
+                    case DOWN ->  by = offSet;
+                    case UP -> by = 1.0 - offSet;
+                    case SOUTH -> bz = 1.0 - offSet;
+                    case NORTH ->  bz = offSet;
+                    case EAST -> bx = 1.0 - offSet;
+                    case WEST -> bx = offSet;
+                }
+            }
+
+            double dx = (posB.getX() + bx) - (posA.getX() + ax);
+            double dy = (posB.getY() + by) - (posA.getY() + ay);
+            double dz = (posB.getZ() + bz) - (posA.getZ() + az);
 
             poseStack.pushPose();
-            poseStack.translate(0.5, 0.81, 0.5);
+            poseStack.translate(ax, ay, az);
             renderCable(poseStack, builder, (float) dx, (float) dy, (float) dz, packedLight);
             poseStack.popPose();
         }
@@ -75,7 +105,7 @@ public class WireCopperConnectEntityRenderer implements BlockEntityRenderer<Wire
     }
 
     @Override
-    public AABB getRenderBoundingBox(WireCopperConnectBlockEntity blockEntity) {
+    public AABB getRenderBoundingBox(WireConnectBlockEntity blockEntity) {
         return new AABB(blockEntity.getBlockPos()).inflate(Config.CABLE_RENDERING_ROTATION.get());
     }
 }

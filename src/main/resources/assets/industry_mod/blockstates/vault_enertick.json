@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "progress=0": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_empty"
+    },
+    "progress=1": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_one"
+    },
+    "progress=2": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_two"
+    },
+    "progress=3": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_three"
+    },
+    "progress=4": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_four"
+    },
+    "progress=5": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_five"
+    },
+    "progress=6": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_six"
+    },
+    "progress=7": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_seven"
+    },
+    "progress=8": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_eight"
+    },
+    "progress=9": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_nine"
+    },
+    "progress=10": {
+      "model": "industry_mod:block/vaults/enertick/vault_enertick_full"
+    }
+  }
+}

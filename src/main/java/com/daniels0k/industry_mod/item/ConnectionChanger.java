@@ -1,8 +1,8 @@
 package com.daniels0k.industry_mod.item;
 
-import com.daniels0k.industry_mod.block.connector.copper.EnumModeWireCopperConnect;
-import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnect;
-import com.daniels0k.industry_mod.block.connector.copper.WireCopperConnectBlockEntity;
+import com.daniels0k.industry_mod.block.connector.copper.EnumModeWireConnect;
+import com.daniels0k.industry_mod.block.connector.copper.WireConnect;
+import com.daniels0k.industry_mod.block.connector.copper.WireConnectBlockEntity;
 import com.daniels0k.industry_mod.item.datacomponent.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -47,15 +47,15 @@ public class ConnectionChanger extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        if(!(blockState.getBlock() instanceof WireCopperConnect)) return InteractionResult.FAIL;
-        if(!(level.getBlockEntity(blockPos) instanceof WireCopperConnectBlockEntity wireCopperConnectBE)) return InteractionResult.FAIL;
+        if(!(blockState.getBlock() instanceof WireConnect)) return InteractionResult.FAIL;
+        if(!(level.getBlockEntity(blockPos) instanceof WireConnectBlockEntity wireCopperConnectBE)) return InteractionResult.FAIL;
         if(!wireCopperConnectBE.connections.isEmpty() || !wireCopperConnectBE.parentsConnect.isEmpty()) {
             player.displayClientMessage(Component.translatable("item.industry_mod.connection_changer.err_connection_or_parent_not_empty"), true);
             return InteractionResult.FAIL;
         }
-        EnumModeWireCopperConnect newMode = isInputChange ? EnumModeWireCopperConnect.MODE_INPUT : EnumModeWireCopperConnect.MODE_OUTPUT;
+        EnumModeWireConnect newMode = isInputChange ? EnumModeWireConnect.MODE_INPUT : EnumModeWireConnect.MODE_OUTPUT;
 
-        BlockState setMode = blockState.setValue(WireCopperConnect.MODE_CONNECT, newMode);
+        BlockState setMode = blockState.setValue(WireConnect.MODE_CONNECT, newMode);
         level.setBlock(blockPos, setMode, 3);
         return InteractionResult.SUCCESS;
     }

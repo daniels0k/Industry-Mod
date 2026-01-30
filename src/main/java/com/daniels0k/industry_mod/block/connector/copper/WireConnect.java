@@ -22,20 +22,17 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class WireCopperConnect extends BaseEntityBlock {
-    public static final MapCodec<WireCopperConnect> CODEC = simpleCodec(WireCopperConnect::new);
+public class WireConnect extends BaseEntityBlock {
+    public static final MapCodec<WireConnect> CODEC = simpleCodec(WireConnect::new);
     public static final VoxelShape SHAPES = Shapes.or(
             box(5.0f, 0.0f, 5.0f, 11.0f, 2.0f, 11.0f),
             box(5.0f, 4.0f, 5.0f, 11.0f, 5.0f, 11.0f),
@@ -49,7 +46,7 @@ public class WireCopperConnect extends BaseEntityBlock {
             box(6.0f, 11.0f, 6.0f, 10.0f, 15.0f, 10.0f)).optimize();
 
     public static final EnumProperty<Direction> FACING = EnumProperty.create("facing", Direction.class);
-    public static final EnumProperty<EnumModeWireCopperConnect> MODE_CONNECT = EnumProperty.create("mode", EnumModeWireCopperConnect.class);
+    public static final EnumProperty<EnumModeWireConnect> MODE_CONNECT = EnumProperty.create("mode", EnumModeWireConnect.class);
     private static final Map<Direction, VoxelShape> SHAPE_CACHE = new HashMap<>();
 
     static {
@@ -99,7 +96,7 @@ public class WireCopperConnect extends BaseEntityBlock {
         return SHAPE_CACHE.get(state.getValue(FACING));
     }
 
-    public WireCopperConnect(Properties properties) {
+    public WireConnect(Properties properties) {
         super(properties);
     }
 
@@ -107,7 +104,7 @@ public class WireCopperConnect extends BaseEntityBlock {
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState()
                 .setValue(FACING, context.getClickedFace().getOpposite())
-                .setValue(MODE_CONNECT, EnumModeWireCopperConnect.MODE_NONE);
+                .setValue(MODE_CONNECT, EnumModeWireConnect.MODE_NONE);
     }
 
     @Override
@@ -127,7 +124,7 @@ public class WireCopperConnect extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new WireCopperConnectBlockEntity(blockPos, blockState);
+        return new WireConnectBlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -142,7 +139,7 @@ public class WireCopperConnect extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof WireCopperConnectBlockEntity blockEntity) {
+        if(level.getBlockEntity(pos) instanceof WireConnectBlockEntity blockEntity) {
             if(stack.isEmpty()) {
                 if(!level.isClientSide()) {
                     boolean success = blockEntity.removeLastConnection();
@@ -158,7 +155,7 @@ public class WireCopperConnect extends BaseEntityBlock {
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
-        if(blockEntity instanceof WireCopperConnectBlockEntity copperWire) {
+        if(blockEntity instanceof WireConnectBlockEntity copperWire) {
             copperWire.drops();
             level.updateNeighbourForOutputSignal(pos, this);
         }
