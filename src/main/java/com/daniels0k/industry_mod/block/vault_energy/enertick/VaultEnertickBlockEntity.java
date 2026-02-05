@@ -46,7 +46,7 @@ public class VaultEnertickBlockEntity extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveWithoutMetadata(registries);
+        return saveWithFullMetadata(registries);
     }
 
     public void tick(Level level, BlockPos pos, BlockState blockState) {

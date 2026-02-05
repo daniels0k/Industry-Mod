@@ -6,6 +6,7 @@ import com.daniels0k.industry_mod.configurations.Config;
 import com.daniels0k.industry_mod.item.ModCreativeTabs;
 import com.daniels0k.industry_mod.item.ModItems;
 import com.daniels0k.industry_mod.item.datacomponent.ModDataComponents;
+import com.daniels0k.industry_mod.recipe.ModRecipes;
 import com.daniels0k.industry_mod.screen.ModMenuTypes;
 import org.slf4j.Logger;
 
@@ -46,6 +47,7 @@ public class IndustryMod {
         ModBlockEntities.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModRecipes.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

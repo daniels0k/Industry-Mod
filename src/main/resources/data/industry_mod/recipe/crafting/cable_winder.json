@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:cobblestone_wall",
+    "R": "minecraft:redstone",
+    "A": "minecraft:stone_slab",
+    "D": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "   ",
+    "IRI",
+    "ADA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "industry_mod:cable_winder"
+  }
+}

@@ -4,7 +4,8 @@ import com.daniels0k.industry_mod.IndustryMod;
 import com.daniels0k.industry_mod.api.capabilities.EnergyCapabilities;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinderBlockEntity;
 import com.daniels0k.industry_mod.block.coal_generator.CoalGeneratorBlockEntity;
-import com.daniels0k.industry_mod.block.connector.copper.WireConnectBlockEntity;
+import com.daniels0k.industry_mod.block.connector.WireConnectBlockEntity;
+import com.daniels0k.industry_mod.block.crusher.CrusherBlockEntity;
 import com.daniels0k.industry_mod.block.vault_energy.enertick.VaultEnertickBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,6 +29,9 @@ public class ModBlockEntities {
 
     public static final Supplier<BlockEntityType<VaultEnertickBlockEntity>> VAULT_ENERTICK = BLOCK_ENTITIES.register("enertick_vault",
             registryName -> new BlockEntityType<>(VaultEnertickBlockEntity::new, ModBlocks.VAULT_ENERTICK.get()));
+
+    public static final Supplier<BlockEntityType<CrusherBlockEntity>> CRUSHER = BLOCK_ENTITIES.register("crusher",
+            registryName -> new BlockEntityType<>(CrusherBlockEntity::new, ModBlocks.CRUSHER.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

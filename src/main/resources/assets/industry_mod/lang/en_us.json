@@ -17,16 +17,25 @@
   "item.industry_mod.cable_roll.err_loop": "§cConnection loop detected, connection aborted",
   "item.industry_mod.cable_roll.err_connectionA": "§cYou cannot start with an output.",
   "item.industry_mod.cable_roll_copper": "Cable Roll",
+  "item.industry_mod.raw_iron_dust": "Raw Iron Dust",
+  "item.industry_mod.raw_gold_dust": "Raw Gold Dust",
+  "item.industry_mod.raw_copper_dust": "Raw Copper Dust",
+  "item.industry_mod.diamond_dust": "Diamond Dust",
+  "item.industry_mod.emerald_dust": "Emerald Dust",
+  "item.industry_mod.amethyst_dust": "Amethyst Dust",
 
   "block.industry_mod.case_machine_basic": "Basic Machine Casing",
   "block.industry_mod.wire_copper_connect": "Wire Copper Connect",
   "block.industry_mod.cable_winder": "Cable Winder",
   "block.industry_mod.coal_generator": "Coal Generator",
   "block.industry_mod.vault_enertick": "Enertick Vault",
-  "block.industry_mod.vault_enertick.desc0": "A simple vault that stores EnerTick.\n§eVault: §a10,000ET",
+  "block.industry_mod.vault_enertick.desc0": "A simple vault that stores EnerTick.",
+  "block.industry_mod.vault_enertick.enertick_storage": "§eEnertick: §a%s",
+  "block.industry_mod.crusher": "Crusher",
 
   "gui.industry_mod.time_process": "Time per roll: %sm: %ss",
-  "gui.industry_mod.time_enertick_generated": "EnerTick: %sET/s",
+  "gui.industry_mod.time_enertick_generated": "Enertick: %sET/s",
+  "gui.ingustry_mod.time_enertick_used": "Enertick used: %sET",
 
   "industry_mod.configuration.title": "Industry Mod Configuration",
   "industry_mod.configuration.section.industry.mod.common.toml": "Industry Mod Configuration",
@@ -34,5 +43,9 @@
   "industry_mod.configuration.hit_block_particle_up": "Hit Block Particle Up",
   "industry_mod.configuration.hit_block_particle_up.tooltip": "Define whether Y coordinates should be added if the block is compatible",
   "industry_mod.configuration.cable_rendering_rotation": "Distance Render Cable",
-  "industry_mod.configuration.cable_rendering_rotation.tooltip": "The type of rotation used to render the cable."
+  "industry_mod.configuration.cable_rendering_rotation.tooltip": "The type of rotation used to render the cable.",
+  "industry_mod.configuration.render_conneciton_cable": "Render Connection Cable",
+  "industry_mod.configuration.render_conneciton_cable.tooltip": "It shows a representation of the cable connections.",
+  "industry_mod.configuration.view_energy_bar": "View Energy Bar",
+  "industry_mod.configuration.view_energy_bar.tooltip": "Display an energy progress bar."
 }

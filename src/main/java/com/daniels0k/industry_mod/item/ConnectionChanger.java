@@ -1,8 +1,8 @@
 package com.daniels0k.industry_mod.item;
 
-import com.daniels0k.industry_mod.block.connector.copper.EnumModeWireConnect;
-import com.daniels0k.industry_mod.block.connector.copper.WireConnect;
-import com.daniels0k.industry_mod.block.connector.copper.WireConnectBlockEntity;
+import com.daniels0k.industry_mod.block.connector.EnumModeWireConnect;
+import com.daniels0k.industry_mod.block.connector.WireConnect;
+import com.daniels0k.industry_mod.block.connector.WireConnectBlockEntity;
 import com.daniels0k.industry_mod.item.datacomponent.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

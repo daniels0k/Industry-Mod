@@ -1,0 +1,12 @@
+{
+  "type": "industry_mod:crushing",
+  "ingredient": "minecraft:diamond",
+  "enertick": 140,
+  "time": 220,
+  "results": [
+    {
+      "count": 2,
+      "id": "industry_mod:diamond_dust"
+    }
+  ]
+}

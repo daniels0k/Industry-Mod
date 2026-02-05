@@ -1,0 +1,12 @@
+{
+  "type": "industry_mod:crushing",
+  "ingredient": "minecraft:raw_copper",
+  "enertick": 30,
+  "time": 80,
+  "results": [
+    {
+      "count": 2,
+      "id": "industry_mod:raw_copper_dust"
+    }
+  ]
+}

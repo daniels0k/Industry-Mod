@@ -39,6 +39,37 @@ public class ModItems {
                     .component(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.empty(), Optional.empty(), "copper", 6, 1.0f, 3.5f))
                     .durability(1000)));
 
+    //Dust/Powders items
+    public static final DeferredItem<Item> RAW_IRON_DUST = ITEMS.register("raw_iron_dust",
+            registryName -> new Item(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, registryName))
+                    .stacksTo(32)));
+
+    public static final DeferredItem<Item> RAW_GOLD_DUST = ITEMS.register("raw_gold_dust",
+            registryName -> new Item(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, registryName))
+                    .stacksTo(32)));
+
+    public static final DeferredItem<Item> RAW_COPPER_DUST = ITEMS.register("raw_copper_dust",
+            registryName -> new Item(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, registryName))
+                    .stacksTo(32)));
+
+    public static final DeferredItem<Item> DIAMOND_DUST = ITEMS.register("diamond_dust",
+            registryName -> new Item(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, registryName))
+                    .stacksTo(32)));
+
+    public static final DeferredItem<Item> EMERALD_DUST = ITEMS.register("emerald_dust",
+            registryName -> new Item(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, registryName))
+                    .stacksTo(32)));
+
+    public static final DeferredItem<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
+            registryName -> new Item(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, registryName))
+                    .stacksTo(32)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

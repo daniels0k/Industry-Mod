@@ -1,0 +1,12 @@
+{
+  "type": "industry_mod:crushing",
+  "ingredient": "minecraft:raw_iron",
+  "enertick": 70,
+  "time": 160,
+  "results": [
+    {
+      "count": 2,
+      "id": "industry_mod:raw_iron_dust"
+    }
+  ]
+}

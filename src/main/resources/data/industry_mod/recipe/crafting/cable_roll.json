@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "minecraft:chain",
+    "L": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    " L ",
+    " P ",
+    " L "
+  ],
+  "result": {
+    "count": 1,
+    "id": "industry_mod:cable_roll"
+  }
+}

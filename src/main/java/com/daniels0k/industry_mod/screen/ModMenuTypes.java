@@ -3,6 +3,7 @@ package com.daniels0k.industry_mod.screen;
 import com.daniels0k.industry_mod.IndustryMod;
 import com.daniels0k.industry_mod.screen.cable_winder.CableWinderMenu;
 import com.daniels0k.industry_mod.screen.coal_generator.CoalGeneratorMenu;
+import com.daniels0k.industry_mod.screen.crusher.CrusherMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -17,6 +18,7 @@ public class ModMenuTypes {
 
     public static final DeferredHolder<MenuType<?>, MenuType<CableWinderMenu>> CABLE_WINDER_MENU = registerMenuType("cable_winder_menu", CableWinderMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<CoalGeneratorMenu>> COAL_GENERATOR_MENU = registerMenuType("coal_generator_menu", CoalGeneratorMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<CrusherMenu>> CRUSHER_MENU = registerMenuType("crusher_menu", CrusherMenu::new);
 
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));

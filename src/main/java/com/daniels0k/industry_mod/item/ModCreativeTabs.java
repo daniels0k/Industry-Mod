@@ -31,6 +31,13 @@ public class ModCreativeTabs {
                                 output.accept(ModBlocks.COAL_GENERATOR);
                                 output.accept(ModBlocks.WIRE_COPPER_CONNECT);
                                 output.accept(ModBlocks.CABLE_WINDER);
+
+                                output.accept(ModItems.RAW_IRON_DUST);
+                                output.accept(ModItems.RAW_GOLD_DUST);
+                                output.accept(ModItems.RAW_COPPER_DUST);
+                                output.accept(ModItems.DIAMOND_DUST);
+                                output.accept(ModItems.EMERALD_DUST);
+                                output.accept(ModItems.AMETHYST_DUST);
                             }))
                     .build());
 

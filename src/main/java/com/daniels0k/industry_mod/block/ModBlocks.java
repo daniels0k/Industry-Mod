@@ -3,7 +3,8 @@ package com.daniels0k.industry_mod.block;
 import com.daniels0k.industry_mod.IndustryMod;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinder;
 import com.daniels0k.industry_mod.block.coal_generator.CoalGenerator;
-import com.daniels0k.industry_mod.block.connector.copper.WireConnect;
+import com.daniels0k.industry_mod.block.connector.WireConnect;
+import com.daniels0k.industry_mod.block.crusher.Crusher;
 import com.daniels0k.industry_mod.block.vault_energy.enertick.VaultEnertick;
 import com.daniels0k.industry_mod.item.ModItems;
 import net.minecraft.core.registries.Registries;
@@ -54,6 +55,13 @@ public class ModBlocks {
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(3.0f, 3.0f)
                     .sound(SoundType.COPPER)
+                    .requiresCorrectToolForDrops()), true);
+
+    public static final DeferredBlock<Crusher> CRUSHER = registerBlock("crusher",
+            registryName -> new Crusher(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()), true);
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<ResourceLocation, T> block, boolean isItemBlcok) {
