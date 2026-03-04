@@ -1,0 +1,28 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "industry_mod:block/vault_fluids/copper/connections/vault_fluid_copper_sides" },
+      "when": { "north": "false" }
+    },
+    {
+      "apply": { "model": "industry_mod:block/vault_fluids/copper/connections/vault_fluid_copper_sides", "y": 180 },
+      "when": { "south": "false" }
+    },
+    {
+      "apply": { "model": "industry_mod:block/vault_fluids/copper/connections/vault_fluid_copper_sides", "y": 270 },
+      "when": { "west": "false" }
+    },
+    {
+      "apply": { "model": "industry_mod:block/vault_fluids/copper/connections/vault_fluid_copper_sides", "y": 90 },
+      "when": { "east": "false" }
+    },
+    {
+      "apply": { "model": "industry_mod:block/vault_fluids/copper/connections/vault_fluid_copper_sides_up_down" },
+      "when": { "up": "false" }
+    },
+    {
+      "apply": { "model": "industry_mod:block/vault_fluids/copper/connections/vault_fluid_copper_sides_up_down", "x": 180 },
+      "when": { "down": "false" }
+    }
+  ]
+}

@@ -21,6 +21,8 @@ public class ModCreativeTabs {
                     .displayItems(
                             ((itemDisplayParameters, output) -> {
                                 output.accept(ModBlocks.CASE_MACHINE_BASIC);
+                                output.accept(ModBlocks.CRUSHER);
+                                output.accept(ModBlocks.BASIC_PUMP);
 
                                 output.accept(ModItems.CONNECTION_CHANGER);
                                 output.accept(ModItems.COPPER_WIRE);
@@ -31,6 +33,9 @@ public class ModCreativeTabs {
                                 output.accept(ModBlocks.COAL_GENERATOR);
                                 output.accept(ModBlocks.WIRE_COPPER_CONNECT);
                                 output.accept(ModBlocks.CABLE_WINDER);
+
+                                output.accept(ModBlocks.COPPER_PIPE_FLUID);
+                                output.accept(ModBlocks.VAULT_FLUID_COPPER);
 
                                 output.accept(ModItems.RAW_IRON_DUST);
                                 output.accept(ModItems.RAW_GOLD_DUST);

@@ -32,6 +32,11 @@
   "block.industry_mod.vault_enertick.desc0": "A simple vault that stores EnerTick.",
   "block.industry_mod.vault_enertick.enertick_storage": "§eEnertick: §a%s",
   "block.industry_mod.crusher": "Crusher",
+  "block.industry_mod.copper_pipe_fluid": "Copper pipe fluid",
+  "block.industry_mod.copper_pipe_fluid.capacity": "§cCapacity: §9100Bm",
+  "block.industry_mod.copper_pipe_fluid.transfer": "§6Transfer: §910Bm§7/tick",
+  "block.industry_mod.basic_pump": "Basic Pump",
+  "block.industry_mod.vault_fluid_copper": "Vault Fluid Copper",
 
   "gui.industry_mod.time_process": "Time per roll: %sm: %ss",
   "gui.industry_mod.time_enertick_generated": "Enertick: %sET/s",

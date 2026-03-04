@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class FluidTankTankBlockCopper extends FluidTankBlock {
-    public static MapCodec<FluidTankTankBlockCopper> CODEC = simpleCodec(FluidTankTankBlockCopper::new);
+public class FluidTankCopperBlock extends FluidTankBlock {
+    public static MapCodec<FluidTankCopperBlock> CODEC = simpleCodec(FluidTankCopperBlock::new);
 
-    public FluidTankTankBlockCopper(Properties properties) {
+    public FluidTankCopperBlock(Properties properties) {
         super(properties);
     }
 
@@ -25,8 +25,13 @@ public class FluidTankTankBlockCopper extends FluidTankBlock {
     }
 
     @Override
+    protected Class<? extends FluidTankBlockEntity> getTankClass() {
+        return FluidTankCopperBlockEntity.class;
+    }
+
+    @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FluidTankCopperTankBlockEntity(blockPos, blockState);
+        return new FluidTankCopperBlockEntity(blockPos, blockState);
     }
 
     @Override

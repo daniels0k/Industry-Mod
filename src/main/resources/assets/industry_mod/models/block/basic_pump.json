@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "north": "industry_mod:block/machine_sides",
+    "south": "industry_mod:block/machine_output_fluid_side",
+    "west": "industry_mod:block/machine_sides",
+    "east": "industry_mod:block/machine_sides",
+    "up": "industry_mod:block/machine_sides",
+    "down": "industry_mod:block/machine_input_fluid_side",
+    "particle": "industry_mod:block/machine_sides"
+  },
+  "render_type": "solid"
+}

@@ -1,0 +1,50 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"ambientocclusion": false,
+	"elements": [
+		{
+			"name": "side",
+			"from": [6, 6, 0],
+			"to": [10, 10, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 2.5]},
+			"faces": {
+				"north": {"uv": [4, 4, 8, 8], "texture": "#texture"},
+				"east": {"uv": [5, 0, 0, 4], "texture": "#texture"},
+				"south": {"uv": [4, 4, 8, 8], "texture": "#texture"},
+				"west": {"uv": [0, 0, 5, 4], "texture": "#texture"},
+				"up": {"uv": [4, 9, 0, 4], "texture": "#texture"},
+				"down": {"uv": [0, 4, 4, 9], "texture": "#texture"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.27148, 0.27148, 0.27148]
+		},
+		"thirdperson_lefthand": {
+			"scale": [0.27148, 0.27148, 0.27148]
+		},
+		"firstperson_righthand": {
+			"translation": [0.75, 0, 1.5],
+			"scale": [0.29297, 0.29297, 0.29297]
+		},
+		"firstperson_lefthand": {
+			"translation": [0.75, 0, 1.5],
+			"scale": [0.29297, 0.29297, 0.29297]
+		},
+		"ground": {
+			"scale": [0.35156, 0.35156, 0.35156]
+		},
+		"gui": {
+			"rotation": [22.69, 26.66, -0.75]
+		},
+		"fixed": {
+			"translation": [0, 0, 0.5]
+		},
+		"on_shelf": {
+			"translation": [0, 0, -2.75]
+		}
+	}
+}

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "industry_mod:vault_fluid_copper"
+          "name": "industry_mod:copper_pipe_fluid"
         }
       ],
       "functions": [],
@@ -18,5 +18,5 @@
       ]
     }
   ],
-  "random_sequence": "industry_mod:blocks/vault_fluids/copper/vault_fluid_copper"
+  "random_sequence": "industry_mod:blocks/copper_pipe_fluid/copper_pipe_fluid"
 }

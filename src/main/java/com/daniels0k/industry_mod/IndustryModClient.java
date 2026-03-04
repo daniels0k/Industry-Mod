@@ -5,6 +5,7 @@ import com.daniels0k.industry_mod.block.ModBlockEntities;
 import com.daniels0k.industry_mod.block.ModBlocks;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinderEntityRenderer;
 import com.daniels0k.industry_mod.block.connector.WireConnectEntityRenderer;
+import com.daniels0k.industry_mod.block.fluid_pipe.FluidPipeBlockEntity;
 import com.daniels0k.industry_mod.configurations.Config;
 import com.daniels0k.industry_mod.screen.ModMenuTypes;
 import com.daniels0k.industry_mod.screen.cable_winder.CableWinderScreen;
@@ -15,12 +16,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
@@ -29,11 +32,15 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = IndustryMod.MOD_ID, dist = Dist.CLIENT)
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = IndustryMod.MOD_ID, value = Dist.CLIENT)
 public class IndustryModClient {
+    public static List<BlockEntityType<? extends FluidPipeBlockEntity>> pipeListEntities = new ArrayList<>();
     public IndustryModClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
         // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
@@ -79,11 +86,15 @@ public class IndustryModClient {
             String enertickView = Component.translatable("block.industry_mod.vault_enertick.enertick_storage", view).getString();
             event.getToolTip().add(1, Component.literal(text));
             event.getToolTip().add(2, Component.literal(enertickView));
+        } else if(stack.is(ModBlocks.COPPER_PIPE_FLUID.asItem())) {
+            event.getToolTip().add(1, Component.translatable("block.industry_mod.copper_pipe_fluid.capacity"));
+            event.getToolTip().add(2, Component.translatable("block.industry_mod.copper_pipe_fluid.transfer"));
         }
     }
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        //Enertick
         event.registerBlockEntity(EnergyCapabilities.EnerTickStorage.BLOCK,
                 ModBlockEntities.VAULT_ENERTICK.get(), (be, side) -> be.energyET);
 
@@ -92,6 +103,16 @@ public class IndustryModClient {
 
         event.registerBlockEntity(EnergyCapabilities.EnerTickStorage.BLOCK,
                 ModBlockEntities.CRUSHER.get(), (be, side) -> be.energyET);
+
+        //Fluids
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.COPPER_PIPE_FLUID.get(), (blockEntity, side) -> blockEntity.tank);
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.BASIC_PUMP.get(), (blockEntity, side) -> blockEntity.tank);
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.VAULT_FLUID_COPPER.get(), (blockEntity, side) -> blockEntity.getTankOrigin(blockEntity.getLevel()));
     }
 
     @SubscribeEvent

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "industry_mod:item/pipe_fluid/copper_pipe_fluid"
+  }
+}

@@ -5,7 +5,12 @@ import com.daniels0k.industry_mod.block.cable_winder.CableWinder;
 import com.daniels0k.industry_mod.block.coal_generator.CoalGenerator;
 import com.daniels0k.industry_mod.block.connector.WireConnect;
 import com.daniels0k.industry_mod.block.crusher.Crusher;
+import com.daniels0k.industry_mod.block.fluid_pipe.FluidPipe;
+import com.daniels0k.industry_mod.block.fluid_pipe.copper.CopperFluidPipe;
+import com.daniels0k.industry_mod.block.pumps.basic.BasicPump;
 import com.daniels0k.industry_mod.block.vault_energy.enertick.VaultEnertick;
+import com.daniels0k.industry_mod.block.fluid_tank.FluidTankBlock;
+import com.daniels0k.industry_mod.block.fluid_tank.copper.FluidTankCopperBlock;
 import com.daniels0k.industry_mod.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -33,7 +38,7 @@ public class ModBlocks {
             registryName -> new WireConnect(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .sound(SoundType.COPPER)
-                    .strength(4.0f, 3.5f)
+                    .strength(1.5f, 3.5f)
                     .requiresCorrectToolForDrops()), true);
 
     public static final DeferredBlock<Block> CABLE_WINDER = registerBlock("cable_winder",
@@ -62,6 +67,28 @@ public class ModBlocks {
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(2.0f, 2.0f)
                     .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()), true);
+
+    public static final DeferredBlock<BasicPump> BASIC_PUMP = registerBlock("basic_pump",
+            registryName -> new BasicPump(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()), true);
+
+    //pipes
+    public static final DeferredBlock<FluidPipe> COPPER_PIPE_FLUID = registerBlock("copper_pipe_fluid",
+            registryName -> new CopperFluidPipe(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(1.5f, 3.0f)
+                    .sound(SoundType.COPPER)
+                    .requiresCorrectToolForDrops()), true);
+
+    public static final DeferredBlock<FluidTankBlock> VAULT_FLUID_COPPER = registerBlock("vault_fluid_copper",
+            registryName -> new FluidTankCopperBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(1.5f, 3.0f)
+                    .sound(SoundType.COPPER)
                     .requiresCorrectToolForDrops()), true);
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<ResourceLocation, T> block, boolean isItemBlcok) {

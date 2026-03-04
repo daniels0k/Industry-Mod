@@ -1,0 +1,55 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid" }
+    },
+    {
+      "when": { "north": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_output" }
+    },
+    {
+      "when": { "east": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_output", "y": 90 }
+    },
+    {
+      "when": { "south": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_output", "y": 180 }
+    },
+    {
+      "when": { "west": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_output", "y": 270 }
+    },
+    {
+      "when": { "up": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_output", "x": 270 }
+    },
+    {
+      "when": { "down": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_output", "x": 90 }
+    },
+    {
+      "when": { "north_in": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_input" }
+    },
+    {
+      "when": { "east_in": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_input", "y": 90 }
+    },
+    {
+      "when": { "south_in": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_input", "y": 180 }
+    },
+    {
+      "when": { "west_in": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_input", "y": 270 }
+    },
+    {
+      "when": { "up_in": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_input", "x": 270 }
+    },
+    {
+      "when": { "down_in": "true" },
+      "apply": { "model": "industry_mod:block/copper_pipe_fluid/copper_pipe_fluid_sides_input", "x": 90 }
+    }
+  ]
+}

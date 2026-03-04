@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "industry_mod:block/basic_pump"
+    },
+    "facing=south": {
+      "model": "industry_mod:block/basic_pump",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "industry_mod:block/basic_pump",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "industry_mod:block/basic_pump",
+      "y": 270
+    }
+  }
+}
