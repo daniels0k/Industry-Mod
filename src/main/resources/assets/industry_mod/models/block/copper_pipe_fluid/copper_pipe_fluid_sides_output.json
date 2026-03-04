@@ -1,0 +1,7 @@
+{
+  "parent": "industry_mod:custom/pipe_fluid/pipe_block_side",
+  "textures": {
+    "texture": "industry_mod:block/pipe_fluid/copper_pipe_fluid_sides",
+    "particle": "industry_mod:block/pipe_fluid/copper_pipe_fluid"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "industry_mod:custom/pipe_fluid/pipe_block",
+  "textures": {
+    "texture": "industry_mod:block/pipe_fluid/copper_pipe_fluid"
+  }
+}
