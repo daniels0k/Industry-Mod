@@ -1,8 +1,5 @@
 package com.daniels0k.industry_mod.block.fluid_pipe;
 
-import com.daniels0k.industry_mod.IndustryMod;
-import com.daniels0k.industry_mod.block.fluid_pipe.copper.CopperFluidPipe;
-import com.daniels0k.industry_mod.block.fluid_tank.FluidTankBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -28,14 +25,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FluidPipeBlockEntity extends BlockEntity {
+public class PipeFluidBlockEntity extends BlockEntity {
     public final FluidTank tank;
     protected Set<Fluid> invalidFluids;
 
     private static final int TRANSFER_RATE = 100;
     private static final int PUSH_AMOUNT = 50;
 
-    public FluidPipeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int capacity) {
+    public PipeFluidBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int capacity) {
         super(type, pos, blockState);
         this.tank = new FluidTank(capacity) {
             @Override
@@ -77,18 +74,18 @@ public class FluidPipeBlockEntity extends BlockEntity {
         return saveWithoutMetadata(registries);
     }
 
-    public void tick(Level level, BlockPos pos, BlockState blockState, FluidPipeBlockEntity blockEntity) {
+    public void tick(Level level, BlockPos pos, BlockState blockState, PipeFluidBlockEntity blockEntity) {
         if(level.isClientSide())  return;
 
         pullFromInputs(level, pos, blockState, blockEntity);
         pushToOutputs(level, pos, blockState, blockEntity);
     }
 
-    private void pullFromInputs(Level level, BlockPos pos, BlockState blockState, FluidPipeBlockEntity blockEntity) {
+    private void pullFromInputs(Level level, BlockPos pos, BlockState blockState, PipeFluidBlockEntity blockEntity) {
         if(blockEntity.tank.getFluidAmount() >= blockEntity.tank.getCapacity()) return;
 
         for(Direction dir : Direction.values()) {
-            if(!FluidPipe.isInput(blockState, dir) || !blockState.getValue(FluidPipe.getDirectionProperty(dir))) continue;
+            if(!PipeFluid.isInput(blockState, dir) || !blockState.getValue(PipeFluid.getDirectionProperty(dir))) continue;
 
             BlockPos neighborPos =  pos.relative(dir);
             var handler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, dir.getOpposite());
@@ -108,12 +105,12 @@ public class FluidPipeBlockEntity extends BlockEntity {
         }
     }
 
-    private void pushToOutputs(Level level, BlockPos pos, BlockState blockState, FluidPipeBlockEntity blockEntity) {
+    private void pushToOutputs(Level level, BlockPos pos, BlockState blockState, PipeFluidBlockEntity blockEntity) {
         if(blockEntity.tank.isEmpty()) return;
 
         List<IFluidHandler> outputs = new ArrayList<>();
         for(Direction dir : Direction.values()) {
-            if(!FluidPipe.isOutput(blockState, dir) || !blockState.getValue(FluidPipe.getDirectionProperty(dir))) continue;
+            if(!PipeFluid.isOutput(blockState, dir) || !blockState.getValue(PipeFluid.getDirectionProperty(dir))) continue;
 
             BlockPos neighborPos = pos.relative(dir);
             var handler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, dir.getOpposite());
@@ -159,13 +156,13 @@ public class FluidPipeBlockEntity extends BlockEntity {
 
         BlockState currentState = getBlockState();
 
-        if(currentState.getValue(FluidPipe.getDirectionProperty(dir))) {
-            BlockState newState = currentState.setValue(FluidPipe.getInputDirectionProperty(dir), isInput);
+        if(currentState.getValue(PipeFluid.getDirectionProperty(dir))) {
+            BlockState newState = currentState.setValue(PipeFluid.getInputDirectionProperty(dir), isInput);
             level.setBlock(worldPosition, newState, 3);
         }
     }
 
     public boolean isInput(Direction dir) {
-        return FluidPipe.isInput(getBlockState(), dir);
+        return PipeFluid.isInput(getBlockState(), dir);
     }
 }

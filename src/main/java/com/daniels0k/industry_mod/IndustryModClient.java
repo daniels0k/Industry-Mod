@@ -5,7 +5,8 @@ import com.daniels0k.industry_mod.block.ModBlockEntities;
 import com.daniels0k.industry_mod.block.ModBlocks;
 import com.daniels0k.industry_mod.block.cable_winder.CableWinderEntityRenderer;
 import com.daniels0k.industry_mod.block.connector.WireConnectEntityRenderer;
-import com.daniels0k.industry_mod.block.fluid_pipe.FluidPipeBlockEntity;
+import com.daniels0k.industry_mod.block.fluid_pipe.PipeFluidBlockEntity;
+import com.daniels0k.industry_mod.block.fluid_tank.FluidTankBlockRenderFluid;
 import com.daniels0k.industry_mod.configurations.Config;
 import com.daniels0k.industry_mod.screen.ModMenuTypes;
 import com.daniels0k.industry_mod.screen.cable_winder.CableWinderScreen;
@@ -40,7 +41,7 @@ import java.util.List;
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = IndustryMod.MOD_ID, value = Dist.CLIENT)
 public class IndustryModClient {
-    public static List<BlockEntityType<? extends FluidPipeBlockEntity>> pipeListEntities = new ArrayList<>();
+    public static List<BlockEntityType<? extends PipeFluidBlockEntity>> pipeListEntities = new ArrayList<>();
     public IndustryModClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
         // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
@@ -56,6 +57,7 @@ public class IndustryModClient {
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.CABLE_WINDER.get(), CableWinderEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.WIRE_COPPER_CONNECT.get(), WireConnectEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.VAULT_FLUID_COPPER.get(), FluidTankBlockRenderFluid::new);
     }
 
     @SubscribeEvent
@@ -94,7 +96,25 @@ public class IndustryModClient {
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        //Enertick
+        registerItemHandlerCapability(event);
+        registerFluidHandlerCapability(event);
+
+        //Energies
+        registerEnertickCapability(event);
+    }
+
+    private static void registerItemHandlerCapability(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.CABLE_WINDER.get(), (be, side) -> be.inventory);
+
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.COAL_GENERATOR.get(), (be, side) -> be.inventory);
+
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.CRUSHER.get(), (be, side) -> be.inventory);
+    }
+
+    private static void registerEnertickCapability(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(EnergyCapabilities.EnerTickStorage.BLOCK,
                 ModBlockEntities.VAULT_ENERTICK.get(), (be, side) -> be.energyET);
 
@@ -103,8 +123,9 @@ public class IndustryModClient {
 
         event.registerBlockEntity(EnergyCapabilities.EnerTickStorage.BLOCK,
                 ModBlockEntities.CRUSHER.get(), (be, side) -> be.energyET);
+    }
 
-        //Fluids
+    private static void registerFluidHandlerCapability(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
                 ModBlockEntities.COPPER_PIPE_FLUID.get(), (blockEntity, side) -> blockEntity.tank);
 

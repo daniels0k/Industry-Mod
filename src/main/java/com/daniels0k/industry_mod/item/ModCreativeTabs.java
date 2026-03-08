@@ -37,6 +37,8 @@ public class ModCreativeTabs {
                                 output.accept(ModBlocks.COPPER_PIPE_FLUID);
                                 output.accept(ModBlocks.VAULT_FLUID_COPPER);
 
+                                output.accept(ModItems.WRENCH);
+
                                 output.accept(ModItems.RAW_IRON_DUST);
                                 output.accept(ModItems.RAW_GOLD_DUST);
                                 output.accept(ModItems.RAW_COPPER_DUST);

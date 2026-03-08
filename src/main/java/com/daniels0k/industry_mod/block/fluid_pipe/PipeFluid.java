@@ -15,14 +15,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class FluidPipe extends BaseEntityBlock {
+public abstract class PipeFluid extends BaseEntityBlock {
     public static BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static BooleanProperty WEST = BlockStateProperties.WEST;
@@ -46,7 +45,7 @@ public abstract class FluidPipe extends BaseEntityBlock {
 
     private static final VoxelShape[] SHAPES_BY_DIRECTION = new VoxelShape[] {SHAPE_DOWN, SHAPE_UP, SHAPE_NORTH, SHAPE_SOUTH, SHAPE_WEST, SHAPE_EAST};
 
-    public FluidPipe(Properties properties) {
+    public PipeFluid(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
             .setValue(NORTH, false)
@@ -57,7 +56,7 @@ public abstract class FluidPipe extends BaseEntityBlock {
             .setValue(DOWN, false));
     }
 
-    protected abstract MapCodec<? extends FluidPipe> codec();
+    protected abstract MapCodec<? extends PipeFluid> codec();
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -86,15 +85,9 @@ public abstract class FluidPipe extends BaseEntityBlock {
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState state = migrateConnections(context.getLevel(), context.getClickedPos());
-        Direction facing = context.getNearestLookingDirection().getOpposite();
 
         for(Direction dir : Direction.values()) {
-            BooleanProperty inputProp = getInputDirectionProperty(dir);
-            if(dir == facing && state.getValue(getDirectionProperty(dir))) {
-                state = state.setValue(inputProp, false);
-            } else {
-                state = state.setValue(inputProp, false);
-            }
+            state = state.setValue(getInputDirectionProperty(dir), false);
         }
 
         return state;
@@ -114,7 +107,7 @@ public abstract class FluidPipe extends BaseEntityBlock {
                 .setValue(UP, canConnection(level, pos.above(), Direction.UP))
                 .setValue(DOWN, canConnection(level, pos.below(), Direction.DOWN));
 
-        if(level.getBlockState(pos).getBlock() instanceof FluidPipe) {
+        if(level.getBlockState(pos).getBlock() instanceof PipeFluid) {
             BlockState oldState = level.getBlockState(pos);
             for(Direction dir : Direction.values()) {
                 BooleanProperty inputProp = getInputDirectionProperty(dir);
@@ -151,7 +144,7 @@ public abstract class FluidPipe extends BaseEntityBlock {
     }
 
     private boolean canConnection(LevelReader levelReader, BlockPos neighborPos, Direction side) {
-        if(levelReader.getBlockState(neighborPos).getBlock() instanceof FluidPipe) {
+        if(levelReader.getBlockState(neighborPos).getBlock() instanceof PipeFluid) {
             return true;
         }
 

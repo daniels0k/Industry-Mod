@@ -52,6 +52,15 @@ public abstract class FluidTankBlockEntity extends BlockEntity {
     private FluidTank createTank(int capacity) {
         return new FluidTank(capacity) {
             @Override
+            protected void onContentsChanged() {
+                super.onContentsChanged();
+                setChanged();
+                if(level != null && !level.isClientSide()) {
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+                }
+            }
+
+            @Override
             public int fill(FluidStack resource, FluidAction action) {
                 if (getLevel() != null && invalidFluids != null) {
                     if (invalidFluids.contains(resource.getFluid())) {
@@ -135,8 +144,11 @@ public abstract class FluidTankBlockEntity extends BlockEntity {
             if(!drained.isEmpty()) {
                 targetTank.fill(drained, IFluidHandler.FluidAction.EXECUTE);
                 setChanged();
-            }
 
+                if(level != null && !level.isClientSide()) {
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+                }
+            }
         }
     }
 
@@ -181,6 +193,11 @@ public abstract class FluidTankBlockEntity extends BlockEntity {
 
         if(tank != null) {
             tank.setCapacity(totalCapacity);
+            int currentAmount = tank.getFluidAmount();
+            if(currentAmount > totalCapacity) {
+                tank.drain(currentAmount - totalCapacity, IFluidHandler.FluidAction.EXECUTE);
+                setChanged();
+            }
         }
 
         for(BlockPos pos : cachedStructure) {

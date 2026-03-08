@@ -5,7 +5,7 @@ import com.daniels0k.industry_mod.block.cable_winder.CableWinderBlockEntity;
 import com.daniels0k.industry_mod.block.coal_generator.CoalGeneratorBlockEntity;
 import com.daniels0k.industry_mod.block.connector.WireConnectBlockEntity;
 import com.daniels0k.industry_mod.block.crusher.CrusherBlockEntity;
-import com.daniels0k.industry_mod.block.fluid_pipe.copper.CopperFluidPipeBlockEntity;
+import com.daniels0k.industry_mod.block.fluid_pipe.copper.CopperPipeFluidBlockEntity;
 import com.daniels0k.industry_mod.block.pumps.basic.BasicPumpBlockEntity;
 import com.daniels0k.industry_mod.block.vault_energy.enertick.VaultEnertickBlockEntity;
 import com.daniels0k.industry_mod.block.fluid_tank.FluidTankBlockEntity;
@@ -39,8 +39,8 @@ public class ModBlockEntities {
             registryName -> new BlockEntityType<>(BasicPumpBlockEntity::new, ModBlocks.BASIC_PUMP.get()));
 
     //Fluids
-    public static final Supplier<BlockEntityType<CopperFluidPipeBlockEntity>> COPPER_PIPE_FLUID = BLOCK_ENTITIES.register("copper_pipe_fluid",
-            registryName -> new BlockEntityType<>(CopperFluidPipeBlockEntity::new, ModBlocks.COPPER_PIPE_FLUID.get()));
+    public static final Supplier<BlockEntityType<CopperPipeFluidBlockEntity>> COPPER_PIPE_FLUID = BLOCK_ENTITIES.register("copper_pipe_fluid",
+            registryName -> new BlockEntityType<>(CopperPipeFluidBlockEntity::new, ModBlocks.COPPER_PIPE_FLUID.get()));
 
     public static final Supplier<BlockEntityType<FluidTankBlockEntity>> VAULT_FLUID_COPPER = BLOCK_ENTITIES.register("vault_fluid_copper",
             registryName -> new BlockEntityType<>(FluidTankCopperBlockEntity::new, ModBlocks.VAULT_FLUID_COPPER.get()));

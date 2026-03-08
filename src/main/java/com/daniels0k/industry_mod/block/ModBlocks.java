@@ -5,8 +5,8 @@ import com.daniels0k.industry_mod.block.cable_winder.CableWinder;
 import com.daniels0k.industry_mod.block.coal_generator.CoalGenerator;
 import com.daniels0k.industry_mod.block.connector.WireConnect;
 import com.daniels0k.industry_mod.block.crusher.Crusher;
-import com.daniels0k.industry_mod.block.fluid_pipe.FluidPipe;
-import com.daniels0k.industry_mod.block.fluid_pipe.copper.CopperFluidPipe;
+import com.daniels0k.industry_mod.block.fluid_pipe.PipeFluid;
+import com.daniels0k.industry_mod.block.fluid_pipe.copper.CopperPipeFluid;
 import com.daniels0k.industry_mod.block.pumps.basic.BasicPump;
 import com.daniels0k.industry_mod.block.vault_energy.enertick.VaultEnertick;
 import com.daniels0k.industry_mod.block.fluid_tank.FluidTankBlock;
@@ -77,8 +77,8 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()), true);
 
     //pipes
-    public static final DeferredBlock<FluidPipe> COPPER_PIPE_FLUID = registerBlock("copper_pipe_fluid",
-            registryName -> new CopperFluidPipe(BlockBehaviour.Properties.of()
+    public static final DeferredBlock<PipeFluid> COPPER_PIPE_FLUID = registerBlock("copper_pipe_fluid",
+            registryName -> new CopperPipeFluid(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(1.5f, 3.0f)
                     .sound(SoundType.COPPER)

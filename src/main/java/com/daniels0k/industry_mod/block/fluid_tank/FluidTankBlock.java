@@ -181,6 +181,11 @@ public abstract class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
+        return true;
+    }
+
+    @Override
     protected int getLightBlock(BlockState state) {
         boolean hasGlass = state.getValue(NORTH) || state.getValue(SOUTH) || state.getValue(EAST) || state.getValue(WEST)
                 || state.getValue(UP) || state.getValue(DOWN);

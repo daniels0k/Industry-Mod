@@ -1,7 +1,7 @@
 package com.daniels0k.industry_mod.block.fluid_pipe.copper;
 
 import com.daniels0k.industry_mod.block.ModBlockEntities;
-import com.daniels0k.industry_mod.block.fluid_pipe.FluidPipe;
+import com.daniels0k.industry_mod.block.fluid_pipe.PipeFluid;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -11,21 +11,21 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class CopperFluidPipe extends FluidPipe {
-    public static final MapCodec<CopperFluidPipe> CODEC = simpleCodec(CopperFluidPipe::new);
+public class CopperPipeFluid extends PipeFluid {
+    public static final MapCodec<CopperPipeFluid> CODEC = simpleCodec(CopperPipeFluid::new);
 
-    public CopperFluidPipe(Properties properties) {
+    public CopperPipeFluid(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected MapCodec<? extends FluidPipe> codec() {
+    protected MapCodec<? extends PipeFluid> codec() {
         return CODEC;
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new CopperFluidPipeBlockEntity(blockPos, blockState);
+        return new CopperPipeFluidBlockEntity(blockPos, blockState);
     }
 
     @Override
