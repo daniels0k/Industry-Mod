@@ -4,5 +4,5 @@
     "glass": "industry_mod:block/vaults/fluid/copper/copper_vault_fluid",
     "particle": "industry_mod:block/copper_machine_sides"
   },
-  "render_type": "translucent"
+  "render_type": "minecraft:translucent"
 }

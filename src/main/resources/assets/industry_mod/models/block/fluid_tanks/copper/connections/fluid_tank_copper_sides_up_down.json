@@ -4,5 +4,5 @@
     "frame": "industry_mod:block/copper_machine_sides",
     "particle": "industry_mod:block/copper_machine_sides"
   },
-  "render_type": "solid"
+  "render_type": "minecraft:translucent"
 }
