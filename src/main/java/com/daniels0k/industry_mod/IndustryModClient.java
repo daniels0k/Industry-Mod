@@ -57,7 +57,7 @@ public class IndustryModClient {
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.CABLE_WINDER.get(), CableWinderEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.WIRE_COPPER_CONNECT.get(), WireConnectEntityRenderer::new);
-        event.registerBlockEntityRenderer(ModBlockEntities.VAULT_FLUID_COPPER.get(), FluidTankBlockRenderFluid::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK_COPPER.get(), FluidTankBlockRenderFluid::new);
     }
 
     @SubscribeEvent
@@ -90,7 +90,8 @@ public class IndustryModClient {
             event.getToolTip().add(2, Component.literal(enertickView));
         } else if(stack.is(ModBlocks.COPPER_PIPE_FLUID.asItem())) {
             event.getToolTip().add(1, Component.translatable("block.industry_mod.copper_pipe_fluid.capacity"));
-            event.getToolTip().add(2, Component.translatable("block.industry_mod.copper_pipe_fluid.transfer"));
+        } else if(stack.is(ModBlocks.FLUID_TANK_COPPER.asItem())) {
+            event.getToolTip().add(1, Component.translatable("block.industry_mod.fluid_tank.capacity", "§910000mB"));
         }
     }
 
@@ -133,7 +134,7 @@ public class IndustryModClient {
                 ModBlockEntities.BASIC_PUMP.get(), (blockEntity, side) -> blockEntity.tank);
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
-                ModBlockEntities.VAULT_FLUID_COPPER.get(), (blockEntity, side) -> blockEntity.getTankOrigin(blockEntity.getLevel()));
+                ModBlockEntities.FLUID_TANK_COPPER.get(), (blockEntity, side) -> blockEntity.getTankOrigin(blockEntity.getLevel()));
     }
 
     @SubscribeEvent

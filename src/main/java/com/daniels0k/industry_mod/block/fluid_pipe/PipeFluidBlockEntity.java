@@ -30,10 +30,10 @@ public class PipeFluidBlockEntity extends BlockEntity {
     protected Set<Fluid> invalidFluids;
 
     private static final int TRANSFER_RATE = 100;
-    private static final int PUSH_AMOUNT = 50;
 
     public PipeFluidBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int capacity) {
         super(type, pos, blockState);
+        this.invalidFluids = new HashSet<>();
         this.tank = new FluidTank(capacity) {
             @Override
             public int fill(FluidStack resource, FluidAction action) {
@@ -49,7 +49,6 @@ public class PipeFluidBlockEntity extends BlockEntity {
                 return super.fill(resource, action);
             }
         };
-        this.invalidFluids = new HashSet<>();
     }
 
     @Override
@@ -125,7 +124,7 @@ public class PipeFluidBlockEntity extends BlockEntity {
         FluidStack available = blockEntity.tank.getFluid().copy();
         int remaining = available.getAmount();
 
-        while(remaining > 0 && !outputs.isEmpty()) {
+        while(remaining > 0) {
             int perTarget = Math.max(1, remaining / outputs.size());
             boolean anyAccepted = false;
 

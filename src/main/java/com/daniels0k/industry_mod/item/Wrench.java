@@ -29,7 +29,13 @@ public class Wrench extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
-        tooltip.accept(Component.translatable("item.industry_mod.wrench.desc0"));
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+        if(customData == null) return;
+        CompoundTag compoundTag = customData.copyTag();
+
+        int currentIndex = compoundTag.getIntOr("dirSetMode", 0);
+        Direction[] dirs = Direction.values();
+        tooltip.accept(Component.translatable("item.industry_mod.wrench.desc0", "§6§l" + dirs[currentIndex].getName()));
 
         super.appendHoverText(stack, context, display, tooltip, flag);
     }

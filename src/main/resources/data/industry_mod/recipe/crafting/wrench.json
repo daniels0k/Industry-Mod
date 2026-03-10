@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "P": "minecraft:iron_nugget"
+  },
+  "pattern": [
+    " P ",
+    " IP",
+    "I  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "industry_mod:wrench"
+  }
+}

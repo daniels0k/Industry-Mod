@@ -36,7 +36,7 @@ public class FluidTankCopperBlock extends FluidTankBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, ModBlockEntities.VAULT_FLUID_COPPER.get(),
+        return createTickerHelper(blockEntityType, ModBlockEntities.FLUID_TANK_COPPER.get(),
                 (levelTick, blockPos, blockState, blockEntity) -> blockEntity.tick(levelTick, blockPos, blockState, blockEntity));
     }
 }

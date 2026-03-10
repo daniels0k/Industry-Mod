@@ -84,12 +84,13 @@ public class ModBlocks {
                     .sound(SoundType.COPPER)
                     .requiresCorrectToolForDrops()), true);
 
-    public static final DeferredBlock<FluidTankBlock> VAULT_FLUID_COPPER = registerBlock("vault_fluid_copper",
+    public static final DeferredBlock<FluidTankBlock> FLUID_TANK_COPPER = registerBlock("fluid_tank_copper",
             registryName -> new FluidTankCopperBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(1.5f, 3.0f)
                     .sound(SoundType.COPPER)
-                    .requiresCorrectToolForDrops()), true);
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()), true);
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<ResourceLocation, T> block, boolean isItemBlcok) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "industry_mod:item/vault_fluids/vault_fluid_copper"
+    "model": "industry_mod:item/tanks/fluid_tank_copper"
   }
 }

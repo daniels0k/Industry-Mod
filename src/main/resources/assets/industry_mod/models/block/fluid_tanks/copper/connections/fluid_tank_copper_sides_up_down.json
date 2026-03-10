@@ -1,5 +1,5 @@
 {
-  "parent": "industry_mod:custom/vaults/fluid_tank_block_sides_up_down",
+  "parent": "industry_mod:custom/tanks/fluid_tank_block_sides_up_down",
   "textures": {
     "frame": "industry_mod:block/copper_machine_sides",
     "particle": "industry_mod:block/copper_machine_sides"

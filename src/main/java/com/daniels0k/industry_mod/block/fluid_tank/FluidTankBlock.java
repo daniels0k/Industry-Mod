@@ -6,12 +6,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -19,6 +22,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +42,14 @@ public abstract class FluidTankBlock extends BaseEntityBlock {
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
+
+    private static final VoxelShape SHAPE = Shapes.or(
+            Block.box(0, 0, 0, 16, 2, 16),
+            Block.box(0, 14, 0, 16, 16, 16),
+            Block.box(0, 0, 0, 2, 16, 16),
+            Block.box(14, 0, 0, 16, 16, 16),
+            Block.box(0, 0, 0, 16, 16, 2),
+            Block.box(0, 0, 14, 16, 16, 16));
 
     public FluidTankBlock(Properties properties) {
         super(properties);
@@ -100,6 +117,7 @@ public abstract class FluidTankBlock extends BaseEntityBlock {
         } else {
             boolean compatible = true;
             Fluid commonFluid = null;
+            int totalSize = 1;
 
             for(FluidTankBlockEntity origin : neighborOrigins) {
                 FluidTank tank = origin.getTank();
@@ -111,32 +129,149 @@ public abstract class FluidTankBlock extends BaseEntityBlock {
                         break;
                     }
                 }
+
+                Set<BlockPos> struct = origin.getConnectedTanks(level);
+                totalSize += struct.size();
             }
 
-            if(compatible) {
-                FluidTankBlockEntity newOrigin = neighborOrigins.stream()
-                        .min(Comparator.comparing((FluidTankBlockEntity o) -> o.getBlockPos().getX())
-                                .thenComparing((FluidTankBlockEntity o) -> o.getBlockPos().getY())
-                                .thenComparing((FluidTankBlockEntity o) -> o.getBlockPos().getZ()))
-                        .orElse(thisTank);
-
-                newOrigin.rebuildStructure(level);
-            } else {
+            if(!compatible) {
                 level.destroyBlock(pos, true);
+                return;
             }
+
+            Set<BlockPos> union = new HashSet<>();
+            for(FluidTankBlockEntity origin : neighborOrigins) {
+                union.addAll(origin.getConnectedTanks(level));
+            }
+            union.add(pos);
+
+            int uMinX = union.stream().mapToInt(BlockPos::getX).min().getAsInt();
+            int uMaxX = union.stream().mapToInt(BlockPos::getX).max().getAsInt();
+            int uMinY = union.stream().mapToInt(BlockPos::getY).min().getAsInt();
+            int uMaxY = union.stream().mapToInt(BlockPos::getY).max().getAsInt();
+            int uMinZ = union.stream().mapToInt(BlockPos::getZ).min().getAsInt();
+            int uMaxZ = union.stream().mapToInt(BlockPos::getZ).max().getAsInt();
+
+            boolean withinLimits = (uMaxX - uMinX) < FluidTankBlockEntity.MAX_WIDTH
+                    && (uMaxY - uMinY) < FluidTankBlockEntity.MAX_HEIGHT
+                    && (uMaxZ - uMinZ) < FluidTankBlockEntity.MAX_WIDTH;
+
+            if(!withinLimits) {
+                level.destroyBlock(pos, true);
+                return;
+            }
+
+            FluidTankBlockEntity newOrigin = neighborOrigins.stream()
+                    .min(Comparator.comparing((FluidTankBlockEntity o) -> o.getBlockPos().getX())
+                            .thenComparing(o -> o.getBlockPos().getY())
+                            .thenComparing(o -> o.getBlockPos().getZ()))
+                    .orElse(thisTank);
+
+            FluidTank mainTank = newOrigin.getTank();
+            if(mainTank != null) {
+                int totalFluid = mainTank.getFluidAmount();
+                for(FluidTankBlockEntity origin : neighborOrigins) {
+                    if(origin != newOrigin && origin.getTank() != null) {
+                        totalFluid += origin.getTank().getFluidAmount();
+                    }
+                }
+
+                for(FluidTankBlockEntity origin : neighborOrigins) {
+                    if(origin != newOrigin && origin.getTank() != null) {
+                        origin.getTank().setFluid(FluidStack.EMPTY);
+                        origin.setChanged();
+                    }
+                }
+
+                if(totalFluid > 0 && commonFluid != null) {
+                    mainTank.setFluid(new FluidStack(commonFluid, totalFluid));
+                }
+            }
+
+            newOrigin.rebuildStructure(level);
         }
     }
 
     @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 1.0f;
+    }
+
+    @Override
+    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return Shapes.empty();
+    }
+
+    @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if(!level.isClientSide()) {
+        if (!level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);
-            if(be instanceof FluidTankBlockEntity tank) {
-                BlockPos oringinPos = tank.getOriginPos();
-                if(oringinPos != null && level.getBlockEntity(oringinPos) instanceof FluidTankBlockEntity origin) {
-                    origin.rebuildStructure(level);
+
+            if(be instanceof FluidTankBlockEntity tank && tank.isOriginBlock()) {
+                // Obtener toda la estructura actual (incluyendo este bloque)
+                Set<BlockPos> structure = tank.getConnectedTanks(level);
+                if(structure.size() > 1) {
+                    BlockPos newOriginPos = structure.stream()
+                            .filter(p -> !p.equals(pos))
+                            .min(Comparator.comparing(BlockPos::asLong))
+                            .orElse(null);
+
+                    if (newOriginPos != null) {
+                        BlockEntity newBe = level.getBlockEntity(newOriginPos);
+
+                        if (newBe instanceof FluidTankBlockEntity newOriginTank) {
+                            if (newOriginTank.getTank() == null) {
+                                newOriginTank.setTank(newOriginTank.getBaseCapacity());
+                            }
+
+                            FluidStack fluidStack = tank.getTank().getFluid().copy();
+                            newOriginTank.getTank().setFluid(fluidStack);
+                            tank.getTank().setFluid(FluidStack.EMPTY);
+
+                            for (BlockPos p : structure) {
+                                if (!p.equals(newOriginPos) && !p.equals(pos)) {
+                                    BlockEntity be2 = level.getBlockEntity(p);
+                                    if (be2 instanceof FluidTankBlockEntity te) {
+                                        te.setOriginPos(newOriginPos);
+                                        te.setOriginBlock(false);
+                                        te.setTank(null);
+                                        te.setChanged();
+                                    }
+                                }
+                            }
+
+                            newOriginTank.setOriginBlock(true);
+                            newOriginTank.setOriginPos(newOriginPos);
+                            newOriginTank.setChanged();
+                        }
+                    }
                 }
             }
+
+            Set<BlockPos> neighbors = new HashSet<>();
+            for (Direction dir : Direction.values()) {
+                BlockPos neighborPos = pos.relative(dir);
+
+                if (level.getBlockEntity(neighborPos) instanceof FluidTankBlockEntity) {
+                    neighbors.add(neighborPos);
+                }
+            }
+
+            boolean result = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+
+            for(BlockPos neighborPos : neighbors) {
+                BlockEntity beAfter = level.getBlockEntity(neighborPos);
+
+                if (beAfter instanceof FluidTankBlockEntity tankAfter) {
+                    tankAfter.rebuildStructure(level);
+                }
+            }
+            return result;
         }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
@@ -171,25 +306,11 @@ public abstract class FluidTankBlock extends BaseEntityBlock {
     protected abstract MapCodec<? extends FluidTankBlock> codec();
 
     @Override
-    protected boolean propagatesSkylightDown(BlockState state) {
-        return true;
-    }
-
-    @Override
-    protected boolean useShapeForLightOcclusion(BlockState state) {
-        return true;
-    }
-
-    @Override
-    protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
-        return true;
-    }
-
-    @Override
     protected int getLightBlock(BlockState state) {
+        super.getLightBlock(state);
         boolean hasGlass = state.getValue(NORTH) || state.getValue(SOUTH) || state.getValue(EAST) || state.getValue(WEST)
                 || state.getValue(UP) || state.getValue(DOWN);
-        return hasGlass ? 1 : 3;
+        return hasGlass ? 0 : 1;
     }
 
     @Override

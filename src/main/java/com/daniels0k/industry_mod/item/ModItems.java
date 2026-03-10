@@ -7,7 +7,6 @@ import com.daniels0k.industry_mod.item.wires.WireCopper;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.CustomData;
@@ -15,7 +14,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class ModItems {
@@ -37,7 +35,7 @@ public class ModItems {
                     .stacksTo(1)));
 
     public static final DeferredItem<Item> CABLE_ROLL_COPPER = ITEMS.register("cable_roll_copper",
-            registryName -> new CableRollCopper(new Item.Properties()
+            registryName -> new CableRoll(new Item.Properties()
                     .setId(ResourceKey.create(Registries.ITEM, registryName))
                     .stacksTo(1)
                     .component(ModDataComponents.ROUTE_DATA, new RouteDataComponent(Optional.empty(), Optional.empty(), "copper", 6, 1.0f, 3.5f))

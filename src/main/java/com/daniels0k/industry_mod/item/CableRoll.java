@@ -33,8 +33,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class CableRollCopper extends Item {
-    public CableRollCopper(Properties properties) {
+public class CableRoll extends Item {
+    public CableRoll(Properties properties) {
         super(properties);
     }
 
@@ -145,7 +145,7 @@ public class CableRollCopper extends Item {
 
         if(slot == EquipmentSlot.MAINHAND) {
             Minecraft mc = Minecraft.getInstance();
-            if(!(stack.getItem() instanceof CableRollCopper)) return;
+            if(!(stack.getItem() instanceof CableRoll)) return;
 
             RouteDataComponent route = stack.get(ModDataComponents.ROUTE_DATA);
             if(route == null) return;

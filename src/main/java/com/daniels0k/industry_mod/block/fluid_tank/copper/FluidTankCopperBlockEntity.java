@@ -7,6 +7,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FluidTankCopperBlockEntity extends FluidTankBlockEntity {
     public FluidTankCopperBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.VAULT_FLUID_COPPER.get(), pos, blockState, 10000);
+        super(ModBlockEntities.FLUID_TANK_COPPER.get(), pos, blockState, 10000);
     }
 }

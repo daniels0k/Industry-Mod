@@ -1,8 +1,8 @@
 {
-  "parent": "industry_mod:custom/vaults/fluid_tank_block",
+  "parent": "industry_mod:custom/tanks/fluid_tank_block",
   "textures": {
     "frame": "industry_mod:block/copper_machine_sides",
-    "glass": "industry_mod:block/vaults/fluid/copper/copper_vault_fluid"
+    "glass": "industry_mod:block/tanks/copper/copper_fluid_tank"
   },
   "render_type": "minecraft:translucent"
 }

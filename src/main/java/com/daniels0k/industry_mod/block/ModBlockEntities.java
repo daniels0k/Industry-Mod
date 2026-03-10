@@ -42,8 +42,8 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<CopperPipeFluidBlockEntity>> COPPER_PIPE_FLUID = BLOCK_ENTITIES.register("copper_pipe_fluid",
             registryName -> new BlockEntityType<>(CopperPipeFluidBlockEntity::new, ModBlocks.COPPER_PIPE_FLUID.get()));
 
-    public static final Supplier<BlockEntityType<FluidTankBlockEntity>> VAULT_FLUID_COPPER = BLOCK_ENTITIES.register("vault_fluid_copper",
-            registryName -> new BlockEntityType<>(FluidTankCopperBlockEntity::new, ModBlocks.VAULT_FLUID_COPPER.get()));
+    public static final Supplier<BlockEntityType<FluidTankBlockEntity>> FLUID_TANK_COPPER = BLOCK_ENTITIES.register("fluid_tank_copper",
+            registryName -> new BlockEntityType<>(FluidTankCopperBlockEntity::new, ModBlocks.FLUID_TANK_COPPER.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

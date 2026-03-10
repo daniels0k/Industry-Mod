@@ -35,7 +35,7 @@ public class ModCreativeTabs {
                                 output.accept(ModBlocks.CABLE_WINDER);
 
                                 output.accept(ModBlocks.COPPER_PIPE_FLUID);
-                                output.accept(ModBlocks.VAULT_FLUID_COPPER);
+                                output.accept(ModBlocks.FLUID_TANK_COPPER);
 
                                 output.accept(ModItems.WRENCH);
 

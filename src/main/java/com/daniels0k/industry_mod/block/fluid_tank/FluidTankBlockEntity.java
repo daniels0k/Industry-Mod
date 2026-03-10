@@ -373,6 +373,51 @@ public abstract class FluidTankBlockEntity extends BlockEntity {
         return 0;
     }
 
+    public void setTank(int capacity) {
+        this.tank = new FluidTank(capacity) {
+            @Override
+            protected void onContentsChanged() {
+                super.onContentsChanged();
+                setChanged();
+                if(level != null && !level.isClientSide()) {
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+                }
+            }
+
+            @Override
+            public int fill(FluidStack resource, FluidAction action) {
+                if (getLevel() != null && invalidFluids != null) {
+                    if (invalidFluids.contains(resource.getFluid())) {
+                        if (!getLevel().isClientSide() && action.execute()) {
+                            getLevel().destroyBlock(worldPosition, false);
+                            getLevel().explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 1f, Level.ExplosionInteraction.NONE);
+                        }
+                        return 0;
+                    }
+                }
+                return super.fill(resource, action);
+            }
+        };
+        this.isOriginBlock = true;
+        setChanged();
+    }
+
+    public boolean isOriginBlock() {
+        return isOriginBlock;
+    }
+
+    public void setOriginBlock(boolean isOriginBlock) {
+        this.isOriginBlock = isOriginBlock;
+    }
+
+    public void setOriginPos(BlockPos originPos) {
+        this.originBlock = originPos;
+    }
+
+    public void setTank(FluidTank tank) {
+        this.tank = tank;
+    }
+
     public Class<? extends FluidTankBlockEntity> getTankClass() {
         return this.getClass();
     }
